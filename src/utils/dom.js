@@ -26,6 +26,5 @@ export function addElementAnyWhereInDom(elem, parent) {
 }
 
 export function addEventsInElements(elem, eventName, cb) {
-  console.log("Hey ", elem, eventName);
   elem.addEventListener(eventName, cb);
 }

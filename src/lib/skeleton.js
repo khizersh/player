@@ -1,12 +1,10 @@
-import createElementWithId, { createElementWithClass } from "../utils/dom";
-import { checkRefs } from "./playerFunctions";
-
-function createPlayerWrapper() {
-  createElementWithClass("div", "TapWrapper");
-  createElementWithId("video", "TapPlayer");
-}
-
 export default function initializePlayer(elementId) {
+  var hlsScript = document.createElement("script");
+  hlsScript.setAttribute(
+    "src",
+    "https://cdnjs.cloudflare.com/ajax/libs/hls.js/0.5.14/hls.min.js"
+  );
+  document.getElementsByTagName("head")[0].appendChild(hlsScript);
   document.getElementById(elementId).innerHTML = `<div class="Twrapper">
         <video id="Tplayer">
             <source src="https://www.w3schools.com/tags/movie.mp4" type="video/mp4">
@@ -18,7 +16,7 @@ export default function initializePlayer(elementId) {
         <div class="Tplayer_main_wrapper">
             <div class="Tplayer_main_btns">
                 <div class="Tplayer_main_play">
-                    <img src="http://assets.stickpng.com/images/580b57fcd9996e24bc43c4f9.png" width="100px"
+                    <img src="images/play-main.png" width="100px"
                         alt="play-image" />
                 </div>
                 <div class="Tplayer_main_buffer">

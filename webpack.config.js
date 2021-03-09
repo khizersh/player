@@ -1,6 +1,10 @@
 const path = require("path");
 
 module.exports = {
+  externals: {
+    Hls: "Hls",
+  },
+  devtool: "source-map",
   entry: path.resolve(__dirname, "./src/index.js"),
   module: {
     rules: [
