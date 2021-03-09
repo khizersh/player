@@ -24,3 +24,8 @@ export function addElementAnyWhereInDom(elem, parent) {
     elementFound.innerHTML = elem.outerHTML;
   }
 }
+
+export function addEventsInElements(elem, eventName, cb) {
+  console.log("Hey ", elem, eventName);
+  elem.addEventListener(eventName, cb);
+}

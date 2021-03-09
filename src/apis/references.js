@@ -19,13 +19,14 @@ const NeedReferences = [
   "Tplayer_main_btns",
   "Tplayer_main_buffer",
   "Tplayer_adverts",
+  "Tplayer_settings",
   "Tplayer_quality_box",
 ];
 export function makeAllReferencesFromDOM() {
-  var allRefs = [];
+  var allRefs = {};
   for (let i = 0; i < NeedReferences.length; i++) {
     let tempRef = getCurrentElement(NeedReferences[i]);
-    allRefs.push({ name: NeedReferences[i], ref: tempRef });
+    allRefs[NeedReferences[i]] = tempRef;
   }
   return allRefs;
 }
