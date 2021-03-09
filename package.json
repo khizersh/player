@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d dist"
+    "build": "webpack --mode=development",
+    "dev": "webpack serve --config webpack.config.js --open"
   },
   "keywords": [],
   "author": "Ali Wahab <alimemonsd@gmail.com>",
@@ -13,9 +14,14 @@
   "devDependencies": {
     "@babel/cli": "^7.13.0",
     "@babel/core": "^7.13.8",
-    "@babel/preset-env": "^7.13.9"
+    "@babel/plugin-transform-modules-commonjs": "^7.13.8",
+    "@babel/preset-env": "^7.13.9",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "hls.js": "^1.0.0-alpha.5"
+    "hls.js": "^1.0.0-rc.3.0.canary.6961"
   }
 }
