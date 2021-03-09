@@ -1,6 +1,7 @@
 import Hls from "hls.js";
 var vidQualityLevels = [];
 var hls = {};
+import { TplayerHideBuffer } from "./playerFunctions";
 export function loadPlayerWithVideo(url) {
   if (hls.currentLevel) {
     hls.destroy();
@@ -9,7 +10,11 @@ export function loadPlayerWithVideo(url) {
   // var videoSrc = 'https://streams.simpaisa.com:8443/tap/smil:ptvsportsnew.smil/playlist.m3u8';
   var videoSrc = url;
   if (Hls.isSupported()) {
-    hls = new Hls({ maxMaxBufferLength: 30, startFragPrefetch: true });
+    hls = new Hls({
+      maxMaxBufferLength: 30,
+      startFragPrefetch: true,
+      // debug: true,
+    });
     hls.loadSource(videoSrc);
     hls.attachMedia(video);
     hls.on(Hls.Events.MANIFEST_LOADING, function () {

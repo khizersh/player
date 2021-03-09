@@ -7,11 +7,12 @@ export function checkRefs() {
   PlayerReferences = makeAllReferencesFromDOM();
   return PlayerReferences;
 }
+var PlayerElements = {};
 
 export default function MainPlayer() {
+  PlayerElements = checkRefs();
   var isTplayerVideoPlaying = false;
   var isQualityBoxVisible = false;
-  var PlayerElements = checkRefs();
   var P = PlayerElements;
   addEventsInElements(P.Tplayer_play, "click", TplayerPlayVideo);
   addEventsInElements(P.Tplayer_pause, "click", TplayerPauseVideo);
@@ -150,9 +151,7 @@ export default function MainPlayer() {
       TplayerPlayVideo();
     }
   }
-  function TplayerHideBuffer(param) {
-    P.Tplayer_main_buffer.style.display = param;
-  }
+
   function TplayerShowHidePlayBtn(param) {
     P.Tplayer_main_play.style.display = param;
   }
@@ -172,4 +171,8 @@ export default function MainPlayer() {
       }, 10000);
     }, 30000);
   }
+}
+
+export function TplayerHideBuffer(param) {
+  PlayerElements.Tplayer_main_buffer.style.display = param;
 }
