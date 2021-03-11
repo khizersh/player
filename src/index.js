@@ -1,10 +1,7 @@
-import { loadPlayerWithVideo } from "./lib/hls";
-import MainPlayer, { checkRefs } from "./lib/playerFunctions";
-import initializePlayer from "./lib/skeleton";
+import TapPlayer from "./clean-code/TapPlayer";
 
-initializePlayer("video-player");
-// checkRefs();
-MainPlayer();
-loadPlayerWithVideo(
-  "https://vodss.tapmad.com/vods/CokeFest/Day1/AbdullahSong01DiamondDynamite/master.m3u8"
-);
+var player = new TapPlayer("video-player", {
+  url:
+    "https://vodss.tapmad.com/vods/CokeFest/Day1/AbdullahSong01DiamondDynamite/master.m3u8",
+});
+console.log(player);
