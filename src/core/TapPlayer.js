@@ -1,5 +1,5 @@
-import { addHLSScript, _initializePlayer } from "./skeleton";
-addHLSScript();
+import PlayerControls from "./controls/PlayerControls";
+import { _initializePlayer } from "./Initialize";
 
 export default class TapPlayer {
   constructor(wrapper, opts = {}) {
@@ -8,13 +8,12 @@ export default class TapPlayer {
     this.poster = opts.poster;
     this.playerRef = null;
     this._initPlayer();
+    this.playVideo();
   }
   _initPlayer() {
     _initializePlayer(this.wrapper, this);
-    console.log(this.playerRef);
   }
   playVideo() {
-    this.playerRef.play();
-    return;
+    var controls = new PlayerControls();
   }
 }

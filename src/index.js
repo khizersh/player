@@ -1,4 +1,4 @@
-import TapPlayer from "./clean-code/TapPlayer";
+import TapPlayer from "./core/TapPlayer";
 
 var player = new TapPlayer("video-player", {
   url:
