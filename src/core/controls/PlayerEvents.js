@@ -10,7 +10,6 @@ export default class PlayerEvents extends PlayerReferences {
     this.observer = new Subject();
     this.pObserver = new PlayerObserver();
     this.observer.subscribeObserver(this.pObserver);
-    console.log(this.pObserver);
   }
 
   PlayVideo() {
@@ -19,7 +18,9 @@ export default class PlayerEvents extends PlayerReferences {
     this.observer.notifyObserver(this.pObserver);
   }
   PauseVideo() {
+    IS_PLAYING = false;
     this.video.pause();
+    this.observer.notifyObserver(this.pObserver);
   }
   ForwardVideo() {
     this.video.currentTime += 10;

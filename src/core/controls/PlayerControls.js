@@ -1,11 +1,18 @@
-import { CLICK } from "./PlayerConst";
+import { CLICK, IS_PLAYING } from "./PlayerConst";
 import PlayerEvents from "./PlayerEvents";
 
 export default class PlayerControls extends PlayerEvents {
   constructor() {
     super();
-    let playBtn = this.getMainPlayButton();
-    this.addListeners(playBtn, CLICK, () => {
+
+    this.addPlayEvent();
+    this.addPauseEvent();
+    this.addOnScreenBtnPlayEvent();
+    this.addOnScreenPlayPauseEvent();
+  }
+  addOnScreenBtnPlayEvent() {
+    let onScreenPlayBtn = this.getOnScreenPlayButton();
+    this.addListeners(onScreenPlayBtn, CLICK, () => {
       this.PlayVideo();
     });
   }
@@ -17,8 +24,18 @@ export default class PlayerControls extends PlayerEvents {
   }
   addPauseEvent() {
     let pauseBtn = this.getMainPauseButton();
-    this.addEventListener(pauseBtn, CLICK, () => {
+    this.addListeners(pauseBtn, CLICK, () => {
       this.PauseVideo();
+    });
+  }
+  addOnScreenPlayPauseEvent() {
+    let mainScreen = this.getFullPlayerSelection();
+    this.addListeners(mainScreen, CLICK, () => {
+      if (IS_PLAYING) {
+        this.PauseVideo();
+      } else {
+        this.PlayVideo();
+      }
     });
   }
   addListeners(element, name, cb) {

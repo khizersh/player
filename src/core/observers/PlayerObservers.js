@@ -1,12 +1,18 @@
 import { IS_PLAYING } from "../controls/PlayerConst";
+import PlayerActions from "../controls/PlayerActions";
 
+var PlayerAction = new PlayerActions();
 export default function PlayerObserver() {
-  console.log(IS_PLAYING);
-
+  function managePlayerPlayingState() {
+    if (IS_PLAYING) {
+      PlayerAction.setPlayerOnPlaying();
+    } else {
+      PlayerAction.setPlayerOnPause();
+    }
+  }
   return {
-    notify: function (index) {
-      console.log(IS_PLAYING);
-      console.log("Observer " + index + " is notified!");
-    },
+    notify: function(index) {
+      managePlayerPlayingState();
+    }
   };
 }

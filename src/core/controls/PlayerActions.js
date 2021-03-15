@@ -4,8 +4,16 @@ export default class PlayerActions extends PlayerReferences {
   constructor() {
     super();
   }
-  playVideo() {
-    var video = this.getVideoRef();
-    video.play();
+
+  setPlayerOnPlaying() {
+    this.getMainPlayButton().style.display = "none";
+    this.getOnScreenPlayButton().style.display = "none";
+    this.getMainPauseButton().style.display = "block";
+    this.getOnScreenBufferElement().style.display = "none";
+  }
+  setPlayerOnPause() {
+    this.getMainPlayButton().style.display = "block";
+    this.getOnScreenPlayButton().style.display = "block";
+    this.getMainPauseButton().style.display = "none";
   }
 }
