@@ -16,4 +16,10 @@ export default class PlayerActions extends PlayerReferences {
     this.getOnScreenPlayButton().style.display = "block";
     this.getMainPauseButton().style.display = "none";
   }
+  showQualityBox() {
+    this.getQualitySelectionBox().style.visibility = "visible";
+  }
+  hideQualityBox() {
+    this.getQualitySelectionBox().style.visibility = "hidden";
+  }
 }

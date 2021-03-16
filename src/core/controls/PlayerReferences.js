@@ -16,7 +16,7 @@ export default class PlayerReferences {
     return this.validateElementReference("Tplayer");
   }
   getFullScreenButton() {
-    return this.validateElementReference("TplayerFullScreen");
+    return this.validateElementReference("Tplayer_fullScr");
   }
   getQualitySelectButton() {
     return this.validateElementReference("Tplayer_settings");

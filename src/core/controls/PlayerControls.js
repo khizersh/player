@@ -18,6 +18,9 @@ export default class PlayerControls extends PlayerEvents {
     this.addBufferedSlider();
     this.addVideoTimeUpdate();
     this.addVideoSeek();
+    this.addLoadedMetaData();
+    this.addFullScreenEvent();
+    this.addSettingsOption();
   }
   addOnScreenBtnPlayEvent() {
     let onScreenPlayBtn = this.getOnScreenPlayButton();
@@ -76,6 +79,25 @@ export default class PlayerControls extends PlayerEvents {
     let progressBarContainer = this.getProgressBarContainer();
     this.addListeners(progressBarContainer, CLICK, (e) => {
       this.SeekVideoTo(e);
+    });
+  }
+  addLoadedMetaData() {
+    let totalTime = this.getTotalTimeElement();
+    this.video.onloadedmetadata = () => {
+      totalTime.innerHTML = secondsToHms(this.video.duration);
+    };
+  }
+  addFullScreenEvent() {
+    let fullScr = this.getFullScreenButton();
+    this.addListeners(fullScr, CLICK, () => {
+      this.SwitchToFullScreen();
+    });
+  }
+  addSettingsOption() {
+    let settings = this.getQualitySelectButton();
+    this.addListeners(settings, CLICK, () => {
+      console.log("settings ");
+      this.OpenCloseSettingBox();
     });
   }
   addListeners(element, name, cb) {

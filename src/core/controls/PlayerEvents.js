@@ -1,6 +1,6 @@
 import { Subject } from "../../apis/Observer";
-import PlayerObserver from "../observers/PlayerObservers";
-import { IS_PLAYING } from "./PlayerConst";
+import PlayerObserver, { QualityBoxObserver } from "../observers";
+import { IS_PLAYING, IS_QUALITY_BOX_OPEN } from "./PlayerConst";
 import PlayerReferences from "./PlayerReferences";
 
 export default class PlayerEvents extends PlayerReferences {
@@ -8,19 +8,21 @@ export default class PlayerEvents extends PlayerReferences {
     super();
     this.video = this.getVideoRef();
     this.observer = new Subject();
-    this.pObserver = new PlayerObserver();
-    this.observer.subscribeObserver(this.pObserver);
+    this.playerObserver = new PlayerObserver();
+    this.qualityBoxObserver = new QualityBoxObserver();
+    this.observer.subscribeObserver(this.playerObserver);
+    this.observer.subscribeObserver(this.qualityBoxObserver);
   }
 
   PlayVideo() {
     IS_PLAYING = true;
     this.video.play();
-    this.observer.notifyObserver(this.pObserver);
+    this.observer.notifyObserver(this.playerObserver);
   }
   PauseVideo() {
     IS_PLAYING = false;
     this.video.pause();
-    this.observer.notifyObserver(this.pObserver);
+    this.observer.notifyObserver(this.playerObserver);
   }
   ForwardVideo() {
     this.video.currentTime += 10;
@@ -70,5 +72,14 @@ export default class PlayerEvents extends PlayerReferences {
     let progressBar = this.getProgressBar();
     var progress = moveTo / video.duration;
     progressBar.style.width = progress * 100 + "%";
+  }
+  OpenCloseSettingBox() {
+    if (IS_QUALITY_BOX_OPEN) {
+      IS_QUALITY_BOX_OPEN = false;
+      this.observer.notifyObserver(this.qualityBoxObserver);
+    } else {
+      IS_QUALITY_BOX_OPEN = true;
+      this.observer.notifyObserver(this.qualityBoxObserver);
+    }
   }
 }

@@ -2,6 +2,46 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/apis/Observer.js":
+/*!******************************!*\
+  !*** ./src/apis/Observer.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Subject": () => (/* binding */ Subject)
+/* harmony export */ });
+var Subject = function Subject() {
+  var observers = [];
+  return {
+    subscribeObserver: function subscribeObserver(observer) {
+      observers.push(observer);
+    },
+    unsubscribeObserver: function unsubscribeObserver(observer) {
+      var index = observers.indexOf(observer);
+
+      if (index > -1) {
+        observers.splice(index, 1);
+      }
+    },
+    notifyObserver: function notifyObserver(observer) {
+      var index = observers.indexOf(observer);
+
+      if (index > -1) {
+        observers[index].notify(index);
+      }
+    },
+    notifyAllObservers: function notifyAllObservers() {
+      for (var i = 0; i < observers.length; i++) {
+        observers[i].notify(i);
+      }
+    }
+  };
+};
+
+/***/ }),
+
 /***/ "./src/core/Initialize.js":
 /*!********************************!*\
   !*** ./src/core/Initialize.js ***!
@@ -133,7 +173,6 @@ var TapPlayer = /*#__PURE__*/function () {
     key: "playVideo",
     value: function playVideo() {
       var controls = new _controls_PlayerControls__WEBPACK_IMPORTED_MODULE_0__.default();
-      controls.btnClick();
     }
   }]);
 
@@ -144,81 +183,15 @@ var TapPlayer = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./src/core/controls/PlayerControls.js":
-/*!*********************************************!*\
-  !*** ./src/core/controls/PlayerControls.js ***!
-  \*********************************************/
+/***/ "./src/core/controls/PlayerActions.js":
+/*!********************************************!*\
+  !*** ./src/core/controls/PlayerActions.js ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ PlayerControls)
-/* harmony export */ });
-/* harmony import */ var _PlayerEvents__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlayerEvents */ "./src/core/controls/PlayerEvents.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-
-var PlayerControls = /*#__PURE__*/function (_PlayerEvents) {
-  _inherits(PlayerControls, _PlayerEvents);
-
-  var _super = _createSuper(PlayerControls);
-
-  function PlayerControls() {
-    _classCallCheck(this, PlayerControls);
-
-    return _super.call(this);
-  }
-
-  _createClass(PlayerControls, [{
-    key: "btnClick",
-    value: function btnClick() {
-      var _this = this;
-
-      var playBtn = this.getMainPlayButton();
-      console.log(playBtn);
-      playBtn.addEventListener("click", function () {
-        _this.PlayVideo;
-      });
-    }
-  }]);
-
-  return PlayerControls;
-}(_PlayerEvents__WEBPACK_IMPORTED_MODULE_0__.default);
-
-
-
-/***/ }),
-
-/***/ "./src/core/controls/PlayerEvents.js":
-/*!*******************************************!*\
-  !*** ./src/core/controls/PlayerEvents.js ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ PlayerEvents)
+/* harmony export */   "default": () => (/* binding */ PlayerActions)
 /* harmony export */ });
 /* harmony import */ var _PlayerReferences__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlayerReferences */ "./src/core/controls/PlayerReferences.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -245,6 +218,337 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+var PlayerActions = /*#__PURE__*/function (_PlayerReferences) {
+  _inherits(PlayerActions, _PlayerReferences);
+
+  var _super = _createSuper(PlayerActions);
+
+  function PlayerActions() {
+    _classCallCheck(this, PlayerActions);
+
+    return _super.call(this);
+  }
+
+  _createClass(PlayerActions, [{
+    key: "setPlayerOnPlaying",
+    value: function setPlayerOnPlaying() {
+      this.getMainPlayButton().style.display = "none";
+      this.getOnScreenPlayButton().style.display = "none";
+      this.getMainPauseButton().style.display = "block";
+      this.getOnScreenBufferElement().style.display = "none";
+    }
+  }, {
+    key: "setPlayerOnPause",
+    value: function setPlayerOnPause() {
+      this.getMainPlayButton().style.display = "block";
+      this.getOnScreenPlayButton().style.display = "block";
+      this.getMainPauseButton().style.display = "none";
+    }
+  }, {
+    key: "showQualityBox",
+    value: function showQualityBox() {
+      this.getQualitySelectionBox().style.display = "block";
+    }
+  }, {
+    key: "hideQualityBox",
+    value: function hideQualityBox() {
+      this.getQualitySelectionBox().style.display = "none";
+    }
+  }]);
+
+  return PlayerActions;
+}(_PlayerReferences__WEBPACK_IMPORTED_MODULE_0__.default);
+
+
+
+/***/ }),
+
+/***/ "./src/core/controls/PlayerConst.js":
+/*!******************************************!*\
+  !*** ./src/core/controls/PlayerConst.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "CLICK": () => (/* binding */ CLICK),
+/* harmony export */   "PLAYER_TIME_UPDATE": () => (/* binding */ PLAYER_TIME_UPDATE),
+/* harmony export */   "PLAYER_PLAYING": () => (/* binding */ PLAYER_PLAYING),
+/* harmony export */   "PLAYER_PROGRESS": () => (/* binding */ PLAYER_PROGRESS),
+/* harmony export */   "IS_PLAYING": () => (/* binding */ IS_PLAYING),
+/* harmony export */   "IS_QUALITY_BOX_OPEN": () => (/* binding */ IS_QUALITY_BOX_OPEN)
+/* harmony export */ });
+var CLICK = "click";
+var PLAYER_TIME_UPDATE = "timeupdate";
+var PLAYER_PLAYING = "playing";
+var PLAYER_PROGRESS = "progress";
+var IS_PLAYING = false;
+var IS_QUALITY_BOX_OPEN = false;
+
+/***/ }),
+
+/***/ "./src/core/controls/PlayerControls.js":
+/*!*********************************************!*\
+  !*** ./src/core/controls/PlayerControls.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ PlayerControls)
+/* harmony export */ });
+/* harmony import */ var _PlayerConst__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlayerConst */ "./src/core/controls/PlayerConst.js");
+/* harmony import */ var _PlayerEvents__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PlayerEvents */ "./src/core/controls/PlayerEvents.js");
+/* harmony import */ var _utils_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../utils/index */ "./src/utils/index.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+var PlayerControls = /*#__PURE__*/function (_PlayerEvents) {
+  _inherits(PlayerControls, _PlayerEvents);
+
+  var _super = _createSuper(PlayerControls);
+
+  function PlayerControls() {
+    var _this;
+
+    _classCallCheck(this, PlayerControls);
+
+    _this = _super.call(this);
+
+    _this.addPlayEvent();
+
+    _this.addPauseEvent();
+
+    _this.addOnScreenBtnPlayEvent();
+
+    _this.addOnScreenPlayPauseEvent();
+
+    _this.addVideoRewindEvent();
+
+    _this.addVideoForwardEvent();
+
+    _this.addBufferedSlider();
+
+    _this.addVideoTimeUpdate();
+
+    _this.addVideoSeek();
+
+    _this.addLoadedMetaData();
+
+    _this.addFullScreenEvent();
+
+    _this.addSettingsOption();
+
+    return _this;
+  }
+
+  _createClass(PlayerControls, [{
+    key: "addOnScreenBtnPlayEvent",
+    value: function addOnScreenBtnPlayEvent() {
+      var _this2 = this;
+
+      var onScreenPlayBtn = this.getOnScreenPlayButton();
+      this.addListeners(onScreenPlayBtn, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CLICK, function () {
+        _this2.PlayVideo();
+      });
+    }
+  }, {
+    key: "addPlayEvent",
+    value: function addPlayEvent() {
+      var _this3 = this;
+
+      var playBtn = this.getMainPlayButton();
+      this.addListeners(playBtn, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CLICK, function () {
+        _this3.PlayVideo();
+      });
+    }
+  }, {
+    key: "addPauseEvent",
+    value: function addPauseEvent() {
+      var _this4 = this;
+
+      var pauseBtn = this.getMainPauseButton();
+      this.addListeners(pauseBtn, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CLICK, function () {
+        _this4.PauseVideo();
+      });
+    }
+  }, {
+    key: "addOnScreenPlayPauseEvent",
+    value: function addOnScreenPlayPauseEvent() {
+      var _this5 = this;
+
+      var mainScreen = this.getFullPlayerSelection();
+      this.addListeners(mainScreen, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CLICK, function () {
+        if (_PlayerConst__WEBPACK_IMPORTED_MODULE_0__.IS_PLAYING) {
+          _this5.PauseVideo();
+        } else {
+          _this5.PlayVideo();
+        }
+      });
+    }
+  }, {
+    key: "addVideoRewindEvent",
+    value: function addVideoRewindEvent() {
+      var _this6 = this;
+
+      var rewindBtn = this.getVideoRewindButton();
+      this.addListeners(rewindBtn, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CLICK, function () {
+        _this6.RewindVideo();
+      });
+    }
+  }, {
+    key: "addVideoForwardEvent",
+    value: function addVideoForwardEvent() {
+      var _this7 = this;
+
+      var forward = this.getVideoForwardButton();
+      this.addListeners(forward, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CLICK, function () {
+        _this7.ForwardVideo();
+      });
+    }
+  }, {
+    key: "addBufferedSlider",
+    value: function addBufferedSlider() {
+      var _this8 = this;
+
+      var bufferedBar = this.getBufferedBar();
+      this.addListeners(this.video, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.PLAYER_PROGRESS, function () {
+        _this8.MoveBufferedRangeInVideo(bufferedBar);
+      });
+    }
+  }, {
+    key: "addVideoTimeUpdate",
+    value: function addVideoTimeUpdate() {
+      var _this9 = this;
+
+      this.addListeners(this.video, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.PLAYER_TIME_UPDATE, function () {
+        var currentTime = _this9.video.currentTime;
+
+        _this9.MovePlayerProgress(currentTime);
+
+        _this9.getCurrentTimeElement().innerHTML = (0,_utils_index__WEBPACK_IMPORTED_MODULE_2__.secondsToHms)(currentTime);
+      });
+    }
+  }, {
+    key: "addVideoSeek",
+    value: function addVideoSeek() {
+      var _this10 = this;
+
+      var progressBarContainer = this.getProgressBarContainer();
+      this.addListeners(progressBarContainer, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CLICK, function (e) {
+        _this10.SeekVideoTo(e);
+      });
+    }
+  }, {
+    key: "addLoadedMetaData",
+    value: function addLoadedMetaData() {
+      var _this11 = this;
+
+      var totalTime = this.getTotalTimeElement();
+
+      this.video.onloadedmetadata = function () {
+        totalTime.innerHTML = (0,_utils_index__WEBPACK_IMPORTED_MODULE_2__.secondsToHms)(_this11.video.duration);
+      };
+    }
+  }, {
+    key: "addFullScreenEvent",
+    value: function addFullScreenEvent() {
+      var _this12 = this;
+
+      var fullScr = this.getFullScreenButton();
+      this.addListeners(fullScr, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CLICK, function () {
+        _this12.SwitchToFullScreen();
+      });
+    }
+  }, {
+    key: "addSettingsOption",
+    value: function addSettingsOption() {
+      var _this13 = this;
+
+      var settings = this.getQualitySelectButton();
+      console.log(settings);
+      this.addListeners(settings, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CLICK, function () {
+        _this13.OpenCloseSettingBox();
+      });
+    }
+  }, {
+    key: "addListeners",
+    value: function addListeners(element, name, cb) {
+      element.addEventListener(name, cb);
+    }
+  }]);
+
+  return PlayerControls;
+}(_PlayerEvents__WEBPACK_IMPORTED_MODULE_1__.default);
+
+
+
+/***/ }),
+
+/***/ "./src/core/controls/PlayerEvents.js":
+/*!*******************************************!*\
+  !*** ./src/core/controls/PlayerEvents.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ PlayerEvents)
+/* harmony export */ });
+/* harmony import */ var _apis_Observer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../apis/Observer */ "./src/apis/Observer.js");
+/* harmony import */ var _observers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../observers */ "./src/core/observers/index.js");
+/* harmony import */ var _PlayerConst__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PlayerConst */ "./src/core/controls/PlayerConst.js");
+/* harmony import */ var _PlayerReferences__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PlayerReferences */ "./src/core/controls/PlayerReferences.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
 var PlayerEvents = /*#__PURE__*/function (_PlayerReferences) {
   _inherits(PlayerEvents, _PlayerReferences);
 
@@ -257,19 +561,30 @@ var PlayerEvents = /*#__PURE__*/function (_PlayerReferences) {
 
     _this = _super.call(this);
     _this.video = _this.getVideoRef();
+    _this.observer = new _apis_Observer__WEBPACK_IMPORTED_MODULE_0__.Subject();
+    _this.playerObserver = new _observers__WEBPACK_IMPORTED_MODULE_1__.default();
+    _this.qualityBoxObserver = new _observers__WEBPACK_IMPORTED_MODULE_1__.QualityBoxObserver();
+
+    _this.observer.subscribeObserver(_this.playerObserver);
+
+    _this.observer.subscribeObserver(_this.qualityBoxObserver);
+
     return _this;
   }
 
   _createClass(PlayerEvents, [{
     key: "PlayVideo",
     value: function PlayVideo() {
-      console.log(this);
+      _PlayerConst__WEBPACK_IMPORTED_MODULE_2__.IS_PLAYING = true;
       this.video.play();
+      this.observer.notifyObserver(this.playerObserver);
     }
   }, {
     key: "PauseVideo",
     value: function PauseVideo() {
+      _PlayerConst__WEBPACK_IMPORTED_MODULE_2__.IS_PLAYING = false;
       this.video.pause();
+      this.observer.notifyObserver(this.playerObserver);
     }
   }, {
     key: "ForwardVideo",
@@ -295,12 +610,53 @@ var PlayerEvents = /*#__PURE__*/function (_PlayerReferences) {
       }
     }
   }, {
-    key: "SeekVideo",
-    value: function SeekVideo() {}
+    key: "SeekVideoTo",
+    value: function SeekVideoTo(elem) {
+      var playerBounds = this.getProgressBarContainer().getBoundingClientRect();
+      var calcPercent = elem.layerX / playerBounds.width * 100;
+      var vidSec = this.video.duration / 100 * calcPercent;
+      this.MovePlayerProgress(vidSec);
+      this.video.currentTime = vidSec;
+    }
+  }, {
+    key: "MoveBufferedRangeInVideo",
+    value: function MoveBufferedRangeInVideo(element) {
+      var video = this.video;
+      var duration = video.duration;
+
+      if (duration > 0) {
+        for (var i = 0; i < video.buffered.length; i++) {
+          if (video.buffered.start(video.buffered.length - 1 - i) < video.currentTime) {
+            var buffered = video.buffered.end(video.buffered.length - 1 - i) / duration * 100;
+            element.style.width = buffered + "%";
+            break;
+          }
+        }
+      }
+    }
+  }, {
+    key: "MovePlayerProgress",
+    value: function MovePlayerProgress(moveTo) {
+      var video = this.getVideoRef();
+      var progressBar = this.getProgressBar();
+      var progress = moveTo / video.duration;
+      progressBar.style.width = progress * 100 + "%";
+    }
+  }, {
+    key: "OpenCloseSettingBox",
+    value: function OpenCloseSettingBox() {
+      if (_PlayerConst__WEBPACK_IMPORTED_MODULE_2__.IS_QUALITY_BOX_OPEN) {
+        _PlayerConst__WEBPACK_IMPORTED_MODULE_2__.IS_QUALITY_BOX_OPEN = false;
+        this.observer.notifyObserver(this.qualityBoxObserver);
+      } else {
+        _PlayerConst__WEBPACK_IMPORTED_MODULE_2__.IS_QUALITY_BOX_OPEN = true;
+        this.observer.notifyObserver(this.qualityBoxObserver);
+      }
+    }
   }]);
 
   return PlayerEvents;
-}(_PlayerReferences__WEBPACK_IMPORTED_MODULE_0__.default);
+}(_PlayerReferences__WEBPACK_IMPORTED_MODULE_3__.default);
 
 
 
@@ -353,7 +709,7 @@ var PlayerReferences = /*#__PURE__*/function () {
   }, {
     key: "getFullScreenButton",
     value: function getFullScreenButton() {
-      return this.validateElementReference("TplayerFullScreen");
+      return this.validateElementReference("Tplayer_fullScr");
     }
   }, {
     key: "getQualitySelectButton",
@@ -435,6 +791,55 @@ var PlayerReferences = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./src/core/observers/index.js":
+/*!*************************************!*\
+  !*** ./src/core/observers/index.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ PlayerObserver),
+/* harmony export */   "QualityBoxObserver": () => (/* binding */ QualityBoxObserver)
+/* harmony export */ });
+/* harmony import */ var _controls_PlayerConst__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../controls/PlayerConst */ "./src/core/controls/PlayerConst.js");
+/* harmony import */ var _controls_PlayerActions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../controls/PlayerActions */ "./src/core/controls/PlayerActions.js");
+
+
+var PlayerAction = new _controls_PlayerActions__WEBPACK_IMPORTED_MODULE_1__.default();
+function PlayerObserver() {
+  function managePlayerPlayingState() {
+    if (_controls_PlayerConst__WEBPACK_IMPORTED_MODULE_0__.IS_PLAYING) {
+      PlayerAction.setPlayerOnPlaying();
+    } else {
+      PlayerAction.setPlayerOnPause();
+    }
+  }
+
+  return {
+    notify: function notify(index) {
+      managePlayerPlayingState();
+    }
+  };
+}
+function QualityBoxObserver() {
+  function manageQualityBoxState() {
+    if (_controls_PlayerConst__WEBPACK_IMPORTED_MODULE_0__.IS_QUALITY_BOX_OPEN) {
+      PlayerAction.hideQualityBox();
+    } else {
+      PlayerAction.showQualityBox();
+    }
+  }
+
+  return {
+    notify: function notify(index) {
+      manageQualityBoxState();
+    }
+  };
+}
+
+/***/ }),
+
 /***/ "./src/markup/MainPlayer.js":
 /*!**********************************!*\
   !*** ./src/markup/MainPlayer.js ***!
@@ -446,6 +851,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "MainPlayer": () => (/* binding */ MainPlayer)
 /* harmony export */ });
 var MainPlayer = "<div class=\"Twrapper\">\n<video id=\"Tplayer\">\n    <source src=\"https://www.w3schools.com/tags/movie.mp4\" type=\"video/mp4\">\n</video>\n<div style=\"width: 0%;display: none;\" id=\"Tplayer_adverts\">\n    <img src=\"https://mailbakery.s3.amazonaws.com/wp-content/uploads/2015/06/26160320/neiman_marcus.gif\"\n        style=\"width: 100%;\" />\n</div>\n<div class=\"Tplayer_main_wrapper\">\n    <div class=\"Tplayer_main_btns\">\n        <div class=\"Tplayer_main_play\">\n            <img src=\"images/play-main.png\" width=\"100px\"\n                alt=\"play-image\" />\n        </div>\n        <div class=\"Tplayer_main_buffer\">\n            <div class=\"loader-6 center\"><span></span></div>\n        </div>\n\n    </div>\n    <div class=\"Tplayer_quality_switcher\">\n        <div class=\"Tplayer_quality_box\">\n            <ul class=\"Tplayer_quality_ul\">\n                <li class=\"Tplayer_quality_list_styles\" onclick=\"switchQualityToAuto(this)\">Auto <span\n                        id=\"Tplayer_current_auto_quality\"></span></li>\n            </ul>\n        </div>\n    </div>\n    <div class=\"Tplayer_controls\">\n        <div class=\"Tplayer_buttons\">\n            <div class=\"Tplayer_buttons_container\">\n                <div class=\"Tplayer_btn_space\">\n                    <button class=\"Tplayer_btn Tplayer_10_sec_rewind\">\n                        <img src=\"images/rewind.svg\" class=\"Tplayer_seekable_btn\" />\n                    </button>\n                </div>\n                <div class=\"Tplayer_btn_space\" style=\"margin: auto\">\n                    <button class=\"Tplayer_btn Tplayer_play\">\n                        <img src=\"images/play.svg\" width=\"15px\" />\n                    </button>\n                    <button class=\"Tplayer_btn Tplayer_pause\">\n                        <img src=\"images/pause.svg\" width=\"15px\" />\n                    </button>\n                    <button class=\"Tplayer_btn Tplayer_replay\">\n                        <img src=\"images/replay.svg\" width=\"15px\" />\n                    </button>\n                </div>\n                <div class=\"Tplayer_btn_space\">\n                    <button class=\"Tplayer_btn Tplayer_10_sec_forward\">\n                        <img src=\"images/forward.svg\" class=\"Tplayer_seekable_btn\" />\n                    </button>\n                </div>\n\n            </div>\n        </div>\n        <div class=\"Tplayer_bar\">\n            <div class=\"Tplayer_timer\">\n                <div class=\"Tplayer_current_time\">0:00</div>\n            </div>\n            <div class=\"Tplayer_bar_container\">\n                <div class=\"Tplayer_progress\"></div>\n                <div class=\"Tplayer_buffered\"></div>\n            </div>\n            <div class=\"Tplayer_timer\">\n                <div class=\"Tplayer_total_time\">0:00</div>\n            </div>\n        </div>\n        <div class=\"Tplayer_resolution\">\n            <div class=\"Tplayer_btn_space\">\n\n                <button class=\"Tplayer_btn \" id=\"Tplayer_volume\">\n                    <img src=\"images/volume.svg\" class=\"Tplayer_volume_btn\" />\n                </button>\n            </div>\n            <div class=\"Tplayer_btn_space\">\n                <button class=\"Tplayer_btn \" id=\"Tplayer_settings\">\n                    <img src=\"images/cog.svg\" class=\"Tplayer_setting_btn\" />\n                </button>\n            </div>\n            <div class=\"Tplayer_btn_space\">\n                <button class=\"Tplayer_btn \" id=\"Tplayer_fullScr\">\n                    <img src=\"images/expand.svg\" class=\"Tplayer_expand_btn\" />\n                </button>\n            </div>\n        </div>\n    </div>\n</div>\n</div>";
+
+/***/ }),
+
+/***/ "./src/utils/index.js":
+/*!****************************!*\
+  !*** ./src/utils/index.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "secondsToHms": () => (/* binding */ secondsToHms)
+/* harmony export */ });
+function secondsToHms(e) {
+  var h = Math.floor(e / 3600).toString().padStart(2, "0"),
+      m = Math.floor(e % 3600 / 60).toString().padStart(2, "0"),
+      s = Math.floor(e % 60).toString().padStart(2, "0");
+
+  if (h == "00") {
+    return m + ":" + s;
+  } else {
+    return h + ":" + m + ":" + s;
+  }
+}
 
 /***/ }),
 
