@@ -39,5 +39,36 @@ export default class PlayerEvents extends PlayerReferences {
       this.video.msRequestFullscreen();
     }
   }
-  SeekVideo() {}
+  SeekVideoTo(elem) {
+    var playerBounds = this.getProgressBarContainer().getBoundingClientRect();
+    var calcPercent = (elem.layerX / playerBounds.width) * 100;
+    var vidSec = (this.video.duration / 100) * calcPercent;
+    this.MovePlayerProgress(vidSec);
+    this.video.currentTime = vidSec;
+  }
+
+  MoveBufferedRangeInVideo(element) {
+    var video = this.video;
+    var duration = video.duration;
+    if (duration > 0) {
+      for (var i = 0; i < video.buffered.length; i++) {
+        if (
+          video.buffered.start(video.buffered.length - 1 - i) <
+          video.currentTime
+        ) {
+          let buffered =
+            (video.buffered.end(video.buffered.length - 1 - i) / duration) *
+            100;
+          element.style.width = buffered + "%";
+          break;
+        }
+      }
+    }
+  }
+  MovePlayerProgress(moveTo) {
+    let video = this.getVideoRef();
+    let progressBar = this.getProgressBar();
+    var progress = moveTo / video.duration;
+    progressBar.style.width = progress * 100 + "%";
+  }
 }
