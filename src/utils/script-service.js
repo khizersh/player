@@ -1,6 +1,17 @@
+import { Subject } from "../apis/Observer";
+import { ScriptLoadedObserver } from "../core/observers";
+
+var observer = new Subject();
+var scriptObserver = new ScriptLoadedObserver();
+observer.subscribeObserver(scriptObserver);
+
 export function addScriptsInHtml(scripts) {
   for (let i = 0; i < scripts.length; i++) {
     var scriptTag = document.createElement("script");
+    scriptTag.type = "text/javascript";
+    scriptTag.addEventListener("load", function (event) {
+      observer.notifyObserver(scriptObserver);
+    });
     scriptTag.setAttribute("src", scripts[i]);
     document.getElementsByTagName("head")[0].appendChild(scriptTag);
   }

@@ -15,7 +15,7 @@ function checkIfHlsAvailable(obj) {
   var hlsAvailable = false;
   var interval = setInterval(() => {
     if (window.Hls) {
-      hlsAvailable = waitForHLS();
+      // hlsAvailable = waitForHLS();
       loadHlsVideo.call(obj);
       clearInterval(interval);
     }
@@ -56,8 +56,7 @@ function waitForHLS() {
   }
 }
 
-export function _initializePlayer(id, obj) {
+export function _initializePlayer(id) {
   addScriptsInHtml(VendorScripts);
   addPlayerToDOM(id);
-  checkIfHlsAvailable(obj);
 }

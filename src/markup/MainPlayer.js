@@ -1,6 +1,5 @@
 export const MainPlayer = `<div class="Twrapper">
 <video id="Tplayer">
-    <source src="https://www.w3schools.com/tags/movie.mp4" type="video/mp4">
 </video>
 <div style="width: 0%;display: none;" id="Tplayer_adverts">
     <img src="https://mailbakery.s3.amazonaws.com/wp-content/uploads/2015/06/26160320/neiman_marcus.gif"

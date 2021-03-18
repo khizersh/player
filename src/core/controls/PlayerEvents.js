@@ -13,7 +13,6 @@ export default class PlayerEvents extends PlayerReferences {
     this.observer.subscribeObserver(this.playerObserver);
     this.observer.subscribeObserver(this.qualityBoxObserver);
   }
-
   PlayVideo() {
     IS_PLAYING = true;
     this.video.play();

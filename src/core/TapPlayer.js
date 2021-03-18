@@ -1,3 +1,4 @@
+import { CURRENT_VIDEO_URL } from "./controls/PlayerConst";
 import PlayerControls from "./controls/PlayerControls";
 import { _initializePlayer } from "./Initialize";
 
@@ -11,7 +12,8 @@ export default class TapPlayer {
     this.playVideo();
   }
   _initPlayer() {
-    _initializePlayer(this.wrapper, this);
+    CURRENT_VIDEO_URL = this.url;
+    _initializePlayer(this.wrapper);
   }
   playVideo() {
     var controls = new PlayerControls();

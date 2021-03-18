@@ -24,7 +24,8 @@ export default class PlayerControls extends PlayerEvents {
   }
   addOnScreenBtnPlayEvent() {
     let onScreenPlayBtn = this.getOnScreenPlayButton();
-    this.addListeners(onScreenPlayBtn, CLICK, () => {
+    this.addListeners(onScreenPlayBtn, CLICK, (e) => {
+      e.stopPropagation();
       this.PlayVideo();
     });
   }
@@ -96,7 +97,6 @@ export default class PlayerControls extends PlayerEvents {
   addSettingsOption() {
     let settings = this.getQualitySelectButton();
     this.addListeners(settings, CLICK, () => {
-      console.log("settings ");
       this.OpenCloseSettingBox();
     });
   }

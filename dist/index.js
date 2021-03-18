@@ -42,6 +42,85 @@ var Subject = function Subject() {
 
 /***/ }),
 
+/***/ "./src/core/HttpLiveStreaming.js":
+/*!***************************************!*\
+  !*** ./src/core/HttpLiveStreaming.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ HttpLiveStreaming)
+/* harmony export */ });
+/* harmony import */ var _controls_PlayerConst__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./controls/PlayerConst */ "./src/core/controls/PlayerConst.js");
+/* harmony import */ var _controls_PlayerReferences__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./controls/PlayerReferences */ "./src/core/controls/PlayerReferences.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var HttpLiveStreaming = /*#__PURE__*/function (_PlayerReferences) {
+  _inherits(HttpLiveStreaming, _PlayerReferences);
+
+  var _super = _createSuper(HttpLiveStreaming);
+
+  function HttpLiveStreaming() {
+    var _this;
+
+    _classCallCheck(this, HttpLiveStreaming);
+
+    _this = _super.call(this);
+    _this.hls = {};
+    return _this;
+  }
+
+  _createClass(HttpLiveStreaming, [{
+    key: "loadHlsVideo",
+    value: function loadHlsVideo() {
+      this.playerRef = this.getVideoRef();
+      var videoSrc = _controls_PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CURRENT_VIDEO_URL;
+
+      if (Hls.isSupported()) {
+        this.hls = new Hls({
+          maxMaxBufferLength: 30
+        });
+        this.hls.loadSource(videoSrc); // this.hls.attachMedia(this.playerRef);
+      } else if (this.playerRef.canPlayType("application/vnd.apple.mpegurl")) {
+        this.playerRef.src = videoSrc;
+      }
+    }
+  }, {
+    key: "onVideoDataLoaded",
+    value: function onVideoDataLoaded() {}
+  }]);
+
+  return HttpLiveStreaming;
+}(_controls_PlayerReferences__WEBPACK_IMPORTED_MODULE_1__.default);
+
+
+
+/***/ }),
+
 /***/ "./src/core/Initialize.js":
 /*!********************************!*\
   !*** ./src/core/Initialize.js ***!
@@ -71,7 +150,7 @@ function checkIfHlsAvailable(obj) {
   var hlsAvailable = false;
   var interval = setInterval(function () {
     if (window.Hls) {
-      hlsAvailable = waitForHLS();
+      // hlsAvailable = waitForHLS();
       loadHlsVideo.call(obj);
       clearInterval(interval);
     }
@@ -119,10 +198,9 @@ function waitForHLS() {
   }
 }
 
-function _initializePlayer(id, obj) {
+function _initializePlayer(id) {
   (0,_utils_script_service__WEBPACK_IMPORTED_MODULE_1__.addScriptsInHtml)(_vendors__WEBPACK_IMPORTED_MODULE_2__.VendorScripts);
   addPlayerToDOM(id);
-  checkIfHlsAvailable(obj);
 }
 
 /***/ }),
@@ -137,13 +215,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ TapPlayer)
 /* harmony export */ });
-/* harmony import */ var _controls_PlayerControls__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./controls/PlayerControls */ "./src/core/controls/PlayerControls.js");
-/* harmony import */ var _Initialize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Initialize */ "./src/core/Initialize.js");
+/* harmony import */ var _controls_PlayerConst__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./controls/PlayerConst */ "./src/core/controls/PlayerConst.js");
+/* harmony import */ var _controls_PlayerControls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./controls/PlayerControls */ "./src/core/controls/PlayerControls.js");
+/* harmony import */ var _Initialize__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Initialize */ "./src/core/Initialize.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -167,12 +247,14 @@ var TapPlayer = /*#__PURE__*/function () {
   _createClass(TapPlayer, [{
     key: "_initPlayer",
     value: function _initPlayer() {
-      (0,_Initialize__WEBPACK_IMPORTED_MODULE_1__._initializePlayer)(this.wrapper, this);
+      _controls_PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CURRENT_VIDEO_URL = this.url;
+
+      (0,_Initialize__WEBPACK_IMPORTED_MODULE_2__._initializePlayer)(this.wrapper);
     }
   }, {
     key: "playVideo",
     value: function playVideo() {
-      var controls = new _controls_PlayerControls__WEBPACK_IMPORTED_MODULE_0__.default();
+      var controls = new _controls_PlayerControls__WEBPACK_IMPORTED_MODULE_1__.default();
     }
   }]);
 
@@ -247,12 +329,12 @@ var PlayerActions = /*#__PURE__*/function (_PlayerReferences) {
   }, {
     key: "showQualityBox",
     value: function showQualityBox() {
-      this.getQualitySelectionBox().style.display = "block";
+      this.getQualitySelectionBox().style.visibility = "visible";
     }
   }, {
     key: "hideQualityBox",
     value: function hideQualityBox() {
-      this.getQualitySelectionBox().style.display = "none";
+      this.getQualitySelectionBox().style.visibility = "hidden";
     }
   }]);
 
@@ -276,7 +358,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "PLAYER_PLAYING": () => (/* binding */ PLAYER_PLAYING),
 /* harmony export */   "PLAYER_PROGRESS": () => (/* binding */ PLAYER_PROGRESS),
 /* harmony export */   "IS_PLAYING": () => (/* binding */ IS_PLAYING),
-/* harmony export */   "IS_QUALITY_BOX_OPEN": () => (/* binding */ IS_QUALITY_BOX_OPEN)
+/* harmony export */   "IS_QUALITY_BOX_OPEN": () => (/* binding */ IS_QUALITY_BOX_OPEN),
+/* harmony export */   "CURRENT_VIDEO_URL": () => (/* binding */ CURRENT_VIDEO_URL)
 /* harmony export */ });
 var CLICK = "click";
 var PLAYER_TIME_UPDATE = "timeupdate";
@@ -284,6 +367,7 @@ var PLAYER_PLAYING = "playing";
 var PLAYER_PROGRESS = "progress";
 var IS_PLAYING = false;
 var IS_QUALITY_BOX_OPEN = false;
+var CURRENT_VIDEO_URL = "";
 
 /***/ }),
 
@@ -489,8 +573,9 @@ var PlayerControls = /*#__PURE__*/function (_PlayerEvents) {
       var _this13 = this;
 
       var settings = this.getQualitySelectButton();
-      console.log(settings);
       this.addListeners(settings, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CLICK, function () {
+        console.log("settings ");
+
         _this13.OpenCloseSettingBox();
       });
     }
@@ -800,10 +885,13 @@ var PlayerReferences = /*#__PURE__*/function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ PlayerObserver),
-/* harmony export */   "QualityBoxObserver": () => (/* binding */ QualityBoxObserver)
+/* harmony export */   "QualityBoxObserver": () => (/* binding */ QualityBoxObserver),
+/* harmony export */   "ScriptLoadedObserver": () => (/* binding */ ScriptLoadedObserver)
 /* harmony export */ });
 /* harmony import */ var _controls_PlayerConst__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../controls/PlayerConst */ "./src/core/controls/PlayerConst.js");
 /* harmony import */ var _controls_PlayerActions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../controls/PlayerActions */ "./src/core/controls/PlayerActions.js");
+/* harmony import */ var _HttpLiveStreaming__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../HttpLiveStreaming */ "./src/core/HttpLiveStreaming.js");
+
 
 
 var PlayerAction = new _controls_PlayerActions__WEBPACK_IMPORTED_MODULE_1__.default();
@@ -837,6 +925,16 @@ function QualityBoxObserver() {
     }
   };
 }
+function ScriptLoadedObserver() {
+  return {
+    notify: function notify(index) {
+      if (window.Hls) {
+        var hlsObj = new _HttpLiveStreaming__WEBPACK_IMPORTED_MODULE_2__.default();
+        hlsObj.loadHlsVideo();
+      }
+    }
+  };
+}
 
 /***/ }),
 
@@ -850,7 +948,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MainPlayer": () => (/* binding */ MainPlayer)
 /* harmony export */ });
-var MainPlayer = "<div class=\"Twrapper\">\n<video id=\"Tplayer\">\n    <source src=\"https://www.w3schools.com/tags/movie.mp4\" type=\"video/mp4\">\n</video>\n<div style=\"width: 0%;display: none;\" id=\"Tplayer_adverts\">\n    <img src=\"https://mailbakery.s3.amazonaws.com/wp-content/uploads/2015/06/26160320/neiman_marcus.gif\"\n        style=\"width: 100%;\" />\n</div>\n<div class=\"Tplayer_main_wrapper\">\n    <div class=\"Tplayer_main_btns\">\n        <div class=\"Tplayer_main_play\">\n            <img src=\"images/play-main.png\" width=\"100px\"\n                alt=\"play-image\" />\n        </div>\n        <div class=\"Tplayer_main_buffer\">\n            <div class=\"loader-6 center\"><span></span></div>\n        </div>\n\n    </div>\n    <div class=\"Tplayer_quality_switcher\">\n        <div class=\"Tplayer_quality_box\">\n            <ul class=\"Tplayer_quality_ul\">\n                <li class=\"Tplayer_quality_list_styles\" onclick=\"switchQualityToAuto(this)\">Auto <span\n                        id=\"Tplayer_current_auto_quality\"></span></li>\n            </ul>\n        </div>\n    </div>\n    <div class=\"Tplayer_controls\">\n        <div class=\"Tplayer_buttons\">\n            <div class=\"Tplayer_buttons_container\">\n                <div class=\"Tplayer_btn_space\">\n                    <button class=\"Tplayer_btn Tplayer_10_sec_rewind\">\n                        <img src=\"images/rewind.svg\" class=\"Tplayer_seekable_btn\" />\n                    </button>\n                </div>\n                <div class=\"Tplayer_btn_space\" style=\"margin: auto\">\n                    <button class=\"Tplayer_btn Tplayer_play\">\n                        <img src=\"images/play.svg\" width=\"15px\" />\n                    </button>\n                    <button class=\"Tplayer_btn Tplayer_pause\">\n                        <img src=\"images/pause.svg\" width=\"15px\" />\n                    </button>\n                    <button class=\"Tplayer_btn Tplayer_replay\">\n                        <img src=\"images/replay.svg\" width=\"15px\" />\n                    </button>\n                </div>\n                <div class=\"Tplayer_btn_space\">\n                    <button class=\"Tplayer_btn Tplayer_10_sec_forward\">\n                        <img src=\"images/forward.svg\" class=\"Tplayer_seekable_btn\" />\n                    </button>\n                </div>\n\n            </div>\n        </div>\n        <div class=\"Tplayer_bar\">\n            <div class=\"Tplayer_timer\">\n                <div class=\"Tplayer_current_time\">0:00</div>\n            </div>\n            <div class=\"Tplayer_bar_container\">\n                <div class=\"Tplayer_progress\"></div>\n                <div class=\"Tplayer_buffered\"></div>\n            </div>\n            <div class=\"Tplayer_timer\">\n                <div class=\"Tplayer_total_time\">0:00</div>\n            </div>\n        </div>\n        <div class=\"Tplayer_resolution\">\n            <div class=\"Tplayer_btn_space\">\n\n                <button class=\"Tplayer_btn \" id=\"Tplayer_volume\">\n                    <img src=\"images/volume.svg\" class=\"Tplayer_volume_btn\" />\n                </button>\n            </div>\n            <div class=\"Tplayer_btn_space\">\n                <button class=\"Tplayer_btn \" id=\"Tplayer_settings\">\n                    <img src=\"images/cog.svg\" class=\"Tplayer_setting_btn\" />\n                </button>\n            </div>\n            <div class=\"Tplayer_btn_space\">\n                <button class=\"Tplayer_btn \" id=\"Tplayer_fullScr\">\n                    <img src=\"images/expand.svg\" class=\"Tplayer_expand_btn\" />\n                </button>\n            </div>\n        </div>\n    </div>\n</div>\n</div>";
+var MainPlayer = "<div class=\"Twrapper\">\n<video id=\"Tplayer\">\n    // <source src=\"https://www.w3schools.com/tags/movie.mp4\" type=\"video/mp4\">\n</video>\n<div style=\"width: 0%;display: none;\" id=\"Tplayer_adverts\">\n    <img src=\"https://mailbakery.s3.amazonaws.com/wp-content/uploads/2015/06/26160320/neiman_marcus.gif\"\n        style=\"width: 100%;\" />\n</div>\n<div class=\"Tplayer_main_wrapper\">\n    <div class=\"Tplayer_main_btns\">\n        <div class=\"Tplayer_main_play\">\n            <img src=\"images/play-main.png\" width=\"100px\"\n                alt=\"play-image\" />\n        </div>\n        <div class=\"Tplayer_main_buffer\">\n            <div class=\"loader-6 center\"><span></span></div>\n        </div>\n\n    </div>\n    <div class=\"Tplayer_quality_switcher\">\n        <div class=\"Tplayer_quality_box\">\n            <ul class=\"Tplayer_quality_ul\">\n                <li class=\"Tplayer_quality_list_styles\" onclick=\"switchQualityToAuto(this)\">Auto <span\n                        id=\"Tplayer_current_auto_quality\"></span></li>\n            </ul>\n        </div>\n    </div>\n    <div class=\"Tplayer_controls\">\n        <div class=\"Tplayer_buttons\">\n            <div class=\"Tplayer_buttons_container\">\n                <div class=\"Tplayer_btn_space\">\n                    <button class=\"Tplayer_btn Tplayer_10_sec_rewind\">\n                        <img src=\"images/rewind.svg\" class=\"Tplayer_seekable_btn\" />\n                    </button>\n                </div>\n                <div class=\"Tplayer_btn_space\" style=\"margin: auto\">\n                    <button class=\"Tplayer_btn Tplayer_play\">\n                        <img src=\"images/play.svg\" width=\"15px\" />\n                    </button>\n                    <button class=\"Tplayer_btn Tplayer_pause\">\n                        <img src=\"images/pause.svg\" width=\"15px\" />\n                    </button>\n                    <button class=\"Tplayer_btn Tplayer_replay\">\n                        <img src=\"images/replay.svg\" width=\"15px\" />\n                    </button>\n                </div>\n                <div class=\"Tplayer_btn_space\">\n                    <button class=\"Tplayer_btn Tplayer_10_sec_forward\">\n                        <img src=\"images/forward.svg\" class=\"Tplayer_seekable_btn\" />\n                    </button>\n                </div>\n\n            </div>\n        </div>\n        <div class=\"Tplayer_bar\">\n            <div class=\"Tplayer_timer\">\n                <div class=\"Tplayer_current_time\">0:00</div>\n            </div>\n            <div class=\"Tplayer_bar_container\">\n                <div class=\"Tplayer_progress\"></div>\n                <div class=\"Tplayer_buffered\"></div>\n            </div>\n            <div class=\"Tplayer_timer\">\n                <div class=\"Tplayer_total_time\">0:00</div>\n            </div>\n        </div>\n        <div class=\"Tplayer_resolution\">\n            <div class=\"Tplayer_btn_space\">\n\n                <button class=\"Tplayer_btn \" id=\"Tplayer_volume\">\n                    <img src=\"images/volume.svg\" class=\"Tplayer_volume_btn\" />\n                </button>\n            </div>\n            <div class=\"Tplayer_btn_space\">\n                <button class=\"Tplayer_btn \" id=\"Tplayer_settings\">\n                    <img src=\"images/cog.svg\" class=\"Tplayer_setting_btn\" />\n                </button>\n            </div>\n            <div class=\"Tplayer_btn_space\">\n                <button class=\"Tplayer_btn \" id=\"Tplayer_fullScr\">\n                    <img src=\"images/expand.svg\" class=\"Tplayer_expand_btn\" />\n                </button>\n            </div>\n        </div>\n    </div>\n</div>\n</div>";
 
 /***/ }),
 
@@ -889,9 +987,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "addScriptsInHtml": () => (/* binding */ addScriptsInHtml),
 /* harmony export */   "getElementReference": () => (/* binding */ getElementReference)
 /* harmony export */ });
+/* harmony import */ var _apis_Observer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../apis/Observer */ "./src/apis/Observer.js");
+/* harmony import */ var _core_observers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/observers */ "./src/core/observers/index.js");
+
+
+var observer = new _apis_Observer__WEBPACK_IMPORTED_MODULE_0__.Subject();
+var scriptObserver = new _core_observers__WEBPACK_IMPORTED_MODULE_1__.ScriptLoadedObserver();
+observer.subscribeObserver(scriptObserver);
 function addScriptsInHtml(scripts) {
   for (var i = 0; i < scripts.length; i++) {
     var scriptTag = document.createElement("script");
+    scriptTag.type = "text/javascript";
+    scriptTag.addEventListener("load", function (event) {
+      observer.notifyObserver(scriptObserver);
+    });
     scriptTag.setAttribute("src", scripts[i]);
     document.getElementsByTagName("head")[0].appendChild(scriptTag);
   }
