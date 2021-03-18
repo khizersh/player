@@ -1,4 +1,5 @@
 const path = require("path");
+const MinifyPlugin = require("babel-minify-webpack-plugin");
 
 module.exports = {
   externals: {
@@ -6,6 +7,7 @@ module.exports = {
   },
   devtool: "source-map",
   entry: path.resolve(__dirname, "./src/index.js"),
+  // plugins: [new MinifyPlugin({ removeConsole: true })],
   module: {
     rules: [
       {

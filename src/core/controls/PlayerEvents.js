@@ -46,6 +46,7 @@ export default class PlayerEvents extends PlayerReferences {
     var vidSec = (this.video.duration / 100) * calcPercent;
     this.MovePlayerProgress(vidSec);
     this.video.currentTime = vidSec;
+    this.vidQualityLevels = [];
   }
 
   MoveBufferedRangeInVideo(element) {

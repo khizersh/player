@@ -1,6 +1,6 @@
 import { Subject } from "../apis/Observer";
 import { ScriptLoadedObserver } from "../core/observers";
-
+import { cssForPlayer } from "./../css/index";
 var observer = new Subject();
 var scriptObserver = new ScriptLoadedObserver();
 observer.subscribeObserver(scriptObserver);
@@ -29,4 +29,9 @@ export function getElementReference(classOrId) {
       return false;
     }
   }
+}
+export function addCSSInDom() {
+  var styleTag = document.createElement("style");
+  styleTag.innerHTML = cssForPlayer;
+  document.getElementsByTagName("head")[0].appendChild(styleTag);
 }

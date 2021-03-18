@@ -54,7 +54,12 @@ export default class PlayerReferences {
   getQualitySelectionBox() {
     return this.validateElementReference("Tplayer_quality_box");
   }
-
+  getQualityLists() {
+    return this.validateElementReference("Tplayer_quality_ul");
+  }
+  getCurrentVideoQuality() {
+    return this.validateElementReference("Tplayer_current_auto_quality");
+  }
   validateElementReference(element) {
     var elementRef = getElementReference(element);
     if (elementRef) {

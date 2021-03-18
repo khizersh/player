@@ -12,7 +12,7 @@ export const MainPlayer = `<div class="Twrapper">
                 alt="play-image" />
         </div>
         <div class="Tplayer_main_buffer">
-            <div class="loader-6 center"><span></span></div>
+            <div class="tap-loader center"><span></span></div>
         </div>
 
     </div>

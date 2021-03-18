@@ -1,9 +1,8 @@
-/* Loader 6 */
-.loader-6 {
+.tap-loader {
   height: 32px;
   width: 32px;
 }
-.loader-6 span {
+.tap-loader span {
   display: block;
   position: absolute;
   top: 0;
@@ -14,8 +13,8 @@
   height: 32px;
   width: 32px;
 }
-.loader-6 span::before,
-.loader-6 span::after {
+.tap-loader span::before,
+.tap-loader span::after {
   content: "";
   display: block;
   position: absolute;
@@ -29,11 +28,11 @@
   border: 5px solid #fff;
   border-radius: 50%;
   opacity: 0;
-  -webkit-animation: loader-6-1 1.5s cubic-bezier(0.075, 0.82, 0.165, 1)
+  -webkit-animation: tap-loader-1 1.5s cubic-bezier(0.075, 0.82, 0.165, 1)
     infinite;
-  animation: loader-6-1 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
+  animation: tap-loader-1 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
 }
-@-webkit-keyframes loader-6-1 {
+@-webkit-keyframes tap-loader-1 {
   0% {
     -webkit-transform: translate3d(0, 0, 0) scale(0);
     opacity: 1;
@@ -43,7 +42,7 @@
     opacity: 0;
   }
 }
-@keyframes loader-6-1 {
+@keyframes tap-loader-1 {
   0% {
     transform: translate3d(0, 0, 0) scale(0);
     opacity: 1;
@@ -53,12 +52,13 @@
     opacity: 0;
   }
 }
-.loader-6 span::after {
-  -webkit-animation: loader-6-2 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) 0.25s
+.tap-loader span::after {
+  -webkit-animation: tap-loader-2 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) 0.25s
     infinite;
-  animation: loader-6-2 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) 0.25s infinite;
+  animation: tap-loader-2 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) 0.25s
+    infinite;
 }
-@-webkit-keyframes loader-6-2 {
+@-webkit-keyframes tap-loader-2 {
   0% {
     -webkit-transform: translate3d(0, 0, 0) scale(0);
     opacity: 1;
@@ -68,7 +68,7 @@
     opacity: 0;
   }
 }
-@keyframes loader-6-2 {
+@keyframes tap-loader-2 {
   0% {
     transform: translate3d(0, 0, 0) scale(0);
     opacity: 1;

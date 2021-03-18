@@ -91,6 +91,7 @@ var HttpLiveStreaming = /*#__PURE__*/function (_PlayerReferences) {
 
     _this = _super.call(this);
     _this.hls = {};
+    _this.vidQualityLevels = [];
     return _this;
   }
 
@@ -102,16 +103,84 @@ var HttpLiveStreaming = /*#__PURE__*/function (_PlayerReferences) {
 
       if (Hls.isSupported()) {
         this.hls = new Hls({
-          maxMaxBufferLength: 30
+          maxMaxBufferLength: 30,
+          startFragPrefetch: true
         });
-        this.hls.loadSource(videoSrc); // this.hls.attachMedia(this.playerRef);
+        this.hls.loadSource(videoSrc);
+        this.hls.attachMedia(this.playerRef);
+        this.onVideoDataLoaded();
       } else if (this.playerRef.canPlayType("application/vnd.apple.mpegurl")) {
         this.playerRef.src = videoSrc;
       }
     }
   }, {
     key: "onVideoDataLoaded",
-    value: function onVideoDataLoaded() {}
+    value: function onVideoDataLoaded() {
+      var _this2 = this;
+
+      this.hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+        _this2.addQualitiesInPlayer(data.levels);
+
+        _this2.realTimeVideoQualityChecker();
+
+        _this2.onHLSStreamPlaying();
+      });
+    }
+  }, {
+    key: "addQualitiesInPlayer",
+    value: function addQualitiesInPlayer(qualities) {
+      var _this3 = this;
+
+      var uls = this.getQualityLists();
+      uls.innerHTML = '<li class="Tplayer_quality_list_styles" onclick="switchQualityToAuto(this)">Auto <span id="Tplayer_current_auto_quality"></span></li>';
+
+      var _loop = function _loop(i) {
+        var li = document.createElement("li");
+        li.classList.add("Tplayer_quality_list_styles");
+        li.innerHTML = qualities[i - 1].height;
+        li.addEventListener("click", function () {
+          var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : i;
+
+          _this3.qualitySwitchBetweenVideo(i - 1);
+        });
+        uls.append(li);
+
+        _this3.vidQualityLevels.unshift(qualities[i - 1].height);
+      };
+
+      for (var i = qualities.length; i > 0; i--) {
+        _loop(i);
+      }
+    }
+  }, {
+    key: "realTimeVideoQualityChecker",
+    value: function realTimeVideoQualityChecker() {
+      this.getCurrentVideoQuality().innerHTML = "(".concat(this.vidQualityLevels[this.hls.currentLevel == -1 ? this.hls.loadLevel : this.hls.currentLevel], ")");
+    }
+  }, {
+    key: "onHLSStreamPlaying",
+    value: function onHLSStreamPlaying() {
+      var _this4 = this;
+
+      this.getVideoRef().addEventListener(_controls_PlayerConst__WEBPACK_IMPORTED_MODULE_0__.PLAYER_TIME_UPDATE, function () {
+        _this4.realTimeVideoQualityChecker();
+      });
+    }
+  }, {
+    key: "qualitySwitchBetweenVideo",
+    value: function qualitySwitchBetweenVideo(quality) {
+      if (this.hls.currentLevel == quality) {
+        return;
+      } else {
+        this.hls.currentLevel = quality;
+      }
+    }
+  }, {
+    key: "switchQualityToAuto",
+    value: function switchQualityToAuto(elem) {
+      this.hls.loadLevel = -1;
+      elem.innerHTML = '* Auto <span id="Tplayer_current_auto_quality"></span>';
+    }
   }]);
 
   return HttpLiveStreaming;
@@ -455,7 +524,9 @@ var PlayerControls = /*#__PURE__*/function (_PlayerEvents) {
       var _this2 = this;
 
       var onScreenPlayBtn = this.getOnScreenPlayButton();
-      this.addListeners(onScreenPlayBtn, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CLICK, function () {
+      this.addListeners(onScreenPlayBtn, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CLICK, function (e) {
+        e.stopPropagation();
+
         _this2.PlayVideo();
       });
     }
@@ -574,8 +645,6 @@ var PlayerControls = /*#__PURE__*/function (_PlayerEvents) {
 
       var settings = this.getQualitySelectButton();
       this.addListeners(settings, _PlayerConst__WEBPACK_IMPORTED_MODULE_0__.CLICK, function () {
-        console.log("settings ");
-
         _this13.OpenCloseSettingBox();
       });
     }
@@ -702,6 +771,7 @@ var PlayerEvents = /*#__PURE__*/function (_PlayerReferences) {
       var vidSec = this.video.duration / 100 * calcPercent;
       this.MovePlayerProgress(vidSec);
       this.video.currentTime = vidSec;
+      this.vidQualityLevels = [];
     }
   }, {
     key: "MoveBufferedRangeInVideo",
@@ -857,6 +927,16 @@ var PlayerReferences = /*#__PURE__*/function () {
       return this.validateElementReference("Tplayer_quality_box");
     }
   }, {
+    key: "getQualityLists",
+    value: function getQualityLists() {
+      return this.validateElementReference("Tplayer_quality_ul");
+    }
+  }, {
+    key: "getCurrentVideoQuality",
+    value: function getCurrentVideoQuality() {
+      return this.validateElementReference("Tplayer_current_auto_quality");
+    }
+  }, {
     key: "validateElementReference",
     value: function validateElementReference(element) {
       var elementRef = (0,_utils_script_service__WEBPACK_IMPORTED_MODULE_0__.getElementReference)(element);
@@ -913,9 +993,9 @@ function PlayerObserver() {
 function QualityBoxObserver() {
   function manageQualityBoxState() {
     if (_controls_PlayerConst__WEBPACK_IMPORTED_MODULE_0__.IS_QUALITY_BOX_OPEN) {
-      PlayerAction.hideQualityBox();
-    } else {
       PlayerAction.showQualityBox();
+    } else {
+      PlayerAction.hideQualityBox();
     }
   }
 
@@ -948,7 +1028,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MainPlayer": () => (/* binding */ MainPlayer)
 /* harmony export */ });
-var MainPlayer = "<div class=\"Twrapper\">\n<video id=\"Tplayer\">\n    // <source src=\"https://www.w3schools.com/tags/movie.mp4\" type=\"video/mp4\">\n</video>\n<div style=\"width: 0%;display: none;\" id=\"Tplayer_adverts\">\n    <img src=\"https://mailbakery.s3.amazonaws.com/wp-content/uploads/2015/06/26160320/neiman_marcus.gif\"\n        style=\"width: 100%;\" />\n</div>\n<div class=\"Tplayer_main_wrapper\">\n    <div class=\"Tplayer_main_btns\">\n        <div class=\"Tplayer_main_play\">\n            <img src=\"images/play-main.png\" width=\"100px\"\n                alt=\"play-image\" />\n        </div>\n        <div class=\"Tplayer_main_buffer\">\n            <div class=\"loader-6 center\"><span></span></div>\n        </div>\n\n    </div>\n    <div class=\"Tplayer_quality_switcher\">\n        <div class=\"Tplayer_quality_box\">\n            <ul class=\"Tplayer_quality_ul\">\n                <li class=\"Tplayer_quality_list_styles\" onclick=\"switchQualityToAuto(this)\">Auto <span\n                        id=\"Tplayer_current_auto_quality\"></span></li>\n            </ul>\n        </div>\n    </div>\n    <div class=\"Tplayer_controls\">\n        <div class=\"Tplayer_buttons\">\n            <div class=\"Tplayer_buttons_container\">\n                <div class=\"Tplayer_btn_space\">\n                    <button class=\"Tplayer_btn Tplayer_10_sec_rewind\">\n                        <img src=\"images/rewind.svg\" class=\"Tplayer_seekable_btn\" />\n                    </button>\n                </div>\n                <div class=\"Tplayer_btn_space\" style=\"margin: auto\">\n                    <button class=\"Tplayer_btn Tplayer_play\">\n                        <img src=\"images/play.svg\" width=\"15px\" />\n                    </button>\n                    <button class=\"Tplayer_btn Tplayer_pause\">\n                        <img src=\"images/pause.svg\" width=\"15px\" />\n                    </button>\n                    <button class=\"Tplayer_btn Tplayer_replay\">\n                        <img src=\"images/replay.svg\" width=\"15px\" />\n                    </button>\n                </div>\n                <div class=\"Tplayer_btn_space\">\n                    <button class=\"Tplayer_btn Tplayer_10_sec_forward\">\n                        <img src=\"images/forward.svg\" class=\"Tplayer_seekable_btn\" />\n                    </button>\n                </div>\n\n            </div>\n        </div>\n        <div class=\"Tplayer_bar\">\n            <div class=\"Tplayer_timer\">\n                <div class=\"Tplayer_current_time\">0:00</div>\n            </div>\n            <div class=\"Tplayer_bar_container\">\n                <div class=\"Tplayer_progress\"></div>\n                <div class=\"Tplayer_buffered\"></div>\n            </div>\n            <div class=\"Tplayer_timer\">\n                <div class=\"Tplayer_total_time\">0:00</div>\n            </div>\n        </div>\n        <div class=\"Tplayer_resolution\">\n            <div class=\"Tplayer_btn_space\">\n\n                <button class=\"Tplayer_btn \" id=\"Tplayer_volume\">\n                    <img src=\"images/volume.svg\" class=\"Tplayer_volume_btn\" />\n                </button>\n            </div>\n            <div class=\"Tplayer_btn_space\">\n                <button class=\"Tplayer_btn \" id=\"Tplayer_settings\">\n                    <img src=\"images/cog.svg\" class=\"Tplayer_setting_btn\" />\n                </button>\n            </div>\n            <div class=\"Tplayer_btn_space\">\n                <button class=\"Tplayer_btn \" id=\"Tplayer_fullScr\">\n                    <img src=\"images/expand.svg\" class=\"Tplayer_expand_btn\" />\n                </button>\n            </div>\n        </div>\n    </div>\n</div>\n</div>";
+var MainPlayer = "<div class=\"Twrapper\">\n<video id=\"Tplayer\">\n</video>\n<div style=\"width: 0%;display: none;\" id=\"Tplayer_adverts\">\n    <img src=\"https://mailbakery.s3.amazonaws.com/wp-content/uploads/2015/06/26160320/neiman_marcus.gif\"\n        style=\"width: 100%;\" />\n</div>\n<div class=\"Tplayer_main_wrapper\">\n    <div class=\"Tplayer_main_btns\">\n        <div class=\"Tplayer_main_play\">\n            <img src=\"images/play-main.png\" width=\"100px\"\n                alt=\"play-image\" />\n        </div>\n        <div class=\"Tplayer_main_buffer\">\n            <div class=\"loader-6 center\"><span></span></div>\n        </div>\n\n    </div>\n    <div class=\"Tplayer_quality_switcher\">\n        <div class=\"Tplayer_quality_box\">\n            <ul class=\"Tplayer_quality_ul\">\n                <li class=\"Tplayer_quality_list_styles\" onclick=\"switchQualityToAuto(this)\">Auto <span\n                        id=\"Tplayer_current_auto_quality\"></span></li>\n            </ul>\n        </div>\n    </div>\n    <div class=\"Tplayer_controls\">\n        <div class=\"Tplayer_buttons\">\n            <div class=\"Tplayer_buttons_container\">\n                <div class=\"Tplayer_btn_space\">\n                    <button class=\"Tplayer_btn Tplayer_10_sec_rewind\">\n                        <img src=\"images/rewind.svg\" class=\"Tplayer_seekable_btn\" />\n                    </button>\n                </div>\n                <div class=\"Tplayer_btn_space\" style=\"margin: auto\">\n                    <button class=\"Tplayer_btn Tplayer_play\">\n                        <img src=\"images/play.svg\" width=\"15px\" />\n                    </button>\n                    <button class=\"Tplayer_btn Tplayer_pause\">\n                        <img src=\"images/pause.svg\" width=\"15px\" />\n                    </button>\n                    <button class=\"Tplayer_btn Tplayer_replay\">\n                        <img src=\"images/replay.svg\" width=\"15px\" />\n                    </button>\n                </div>\n                <div class=\"Tplayer_btn_space\">\n                    <button class=\"Tplayer_btn Tplayer_10_sec_forward\">\n                        <img src=\"images/forward.svg\" class=\"Tplayer_seekable_btn\" />\n                    </button>\n                </div>\n\n            </div>\n        </div>\n        <div class=\"Tplayer_bar\">\n            <div class=\"Tplayer_timer\">\n                <div class=\"Tplayer_current_time\">0:00</div>\n            </div>\n            <div class=\"Tplayer_bar_container\">\n                <div class=\"Tplayer_progress\"></div>\n                <div class=\"Tplayer_buffered\"></div>\n            </div>\n            <div class=\"Tplayer_timer\">\n                <div class=\"Tplayer_total_time\">0:00</div>\n            </div>\n        </div>\n        <div class=\"Tplayer_resolution\">\n            <div class=\"Tplayer_btn_space\">\n\n                <button class=\"Tplayer_btn \" id=\"Tplayer_volume\">\n                    <img src=\"images/volume.svg\" class=\"Tplayer_volume_btn\" />\n                </button>\n            </div>\n            <div class=\"Tplayer_btn_space\">\n                <button class=\"Tplayer_btn \" id=\"Tplayer_settings\">\n                    <img src=\"images/cog.svg\" class=\"Tplayer_setting_btn\" />\n                </button>\n            </div>\n            <div class=\"Tplayer_btn_space\">\n                <button class=\"Tplayer_btn \" id=\"Tplayer_fullScr\">\n                    <img src=\"images/expand.svg\" class=\"Tplayer_expand_btn\" />\n                </button>\n            </div>\n        </div>\n    </div>\n</div>\n</div>";
 
 /***/ }),
 
@@ -1032,7 +1112,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "VendorScripts": () => (/* binding */ VendorScripts)
 /* harmony export */ });
-var HLSScript = "https://cdnjs.cloudflare.com/ajax/libs/hls.js/0.5.14/hls.min.js";
+var HLSScript = "https://cdn.jsdelivr.net/npm/hls.js@latest";
 var CastScript = "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1";
 var VendorScripts = [HLSScript, CastScript];
 

@@ -1,5 +1,5 @@
 import { MainPlayer } from "../markup/MainPlayer";
-import { addScriptsInHtml } from "../utils/script-service";
+import { addCSSInDom, addScriptsInHtml } from "../utils/script-service";
 import { VendorScripts } from "../vendors";
 
 var vidQualityLevels = [];
@@ -58,5 +58,6 @@ function waitForHLS() {
 
 export function _initializePlayer(id) {
   addScriptsInHtml(VendorScripts);
+  addCSSInDom();
   addPlayerToDOM(id);
 }
