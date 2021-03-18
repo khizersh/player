@@ -1,7 +1,7 @@
 import { CURRENT_VIDEO_URL, PLAYER_TIME_UPDATE } from "./controls/PlayerConst";
-import PlayerReferences from "./controls/PlayerReferences";
+import PlayerActions from "./controls/PlayerActions";
 
-export default class HttpLiveStreaming extends PlayerReferences {
+export default class HttpLiveStreaming extends PlayerActions {
   constructor() {
     super();
     this.hls = {};
@@ -16,16 +16,32 @@ export default class HttpLiveStreaming extends PlayerReferences {
       this.hls.loadSource(videoSrc);
       this.hls.attachMedia(this.playerRef);
       this.onVideoDataLoaded();
+      this.onBufferEvent();
     } else if (this.playerRef.canPlayType("application/vnd.apple.mpegurl")) {
       this.playerRef.src = videoSrc;
     }
   }
   onVideoDataLoaded() {
     this.hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
+      console.log("Ali");
+
       this.addQualitiesInPlayer(data.levels);
       this.realTimeVideoQualityChecker();
       this.onHLSStreamPlaying();
     });
+  }
+  onBufferEvent() {
+    try {
+      this.hls.on(Hls.Events.ERROR, (event, { details }) => {
+        console.log(details);
+
+        if (details === Hls.ErrorDetails.BUFFER_STALLED_ERROR) {
+          this.setPlayerOnBuffering(true);
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
   addQualitiesInPlayer(qualities) {
     var uls = this.getQualityLists();

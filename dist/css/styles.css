@@ -123,7 +123,7 @@ video::-webkit-media-controls {
   width: 20px;
   cursor: pointer;
 }
-.Tplayer_volume_btn {
+.Tplayer__btn {
   width: 20px;
   cursor: pointer;
 }

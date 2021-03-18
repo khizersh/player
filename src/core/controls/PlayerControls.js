@@ -2,7 +2,7 @@ import {
   CLICK,
   IS_PLAYING,
   PLAYER_PROGRESS,
-  PLAYER_TIME_UPDATE,
+  PLAYER_TIME_UPDATE
 } from "./PlayerConst";
 import PlayerEvents from "./PlayerEvents";
 import { secondsToHms } from "./../../utils/index";
@@ -24,7 +24,7 @@ export default class PlayerControls extends PlayerEvents {
   }
   addOnScreenBtnPlayEvent() {
     let onScreenPlayBtn = this.getOnScreenPlayButton();
-    this.addListeners(onScreenPlayBtn, CLICK, (e) => {
+    this.addListeners(onScreenPlayBtn, CLICK, e => {
       e.stopPropagation();
       this.PlayVideo();
     });
@@ -74,11 +74,12 @@ export default class PlayerControls extends PlayerEvents {
       let currentTime = this.video.currentTime;
       this.MovePlayerProgress(currentTime);
       this.getCurrentTimeElement().innerHTML = secondsToHms(currentTime);
+      this.getOnScreenBufferElement().style.display = "none";
     });
   }
   addVideoSeek() {
     let progressBarContainer = this.getProgressBarContainer();
-    this.addListeners(progressBarContainer, CLICK, (e) => {
+    this.addListeners(progressBarContainer, CLICK, e => {
       this.SeekVideoTo(e);
     });
   }
@@ -86,6 +87,7 @@ export default class PlayerControls extends PlayerEvents {
     let totalTime = this.getTotalTimeElement();
     this.video.onloadedmetadata = () => {
       totalTime.innerHTML = secondsToHms(this.video.duration);
+      this.getOnScreenBufferElement().style.display = "none";
     };
   }
   addFullScreenEvent() {

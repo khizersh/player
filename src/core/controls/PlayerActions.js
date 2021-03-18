@@ -9,7 +9,7 @@ export default class PlayerActions extends PlayerReferences {
     this.getMainPlayButton().style.display = "none";
     this.getOnScreenPlayButton().style.display = "none";
     this.getMainPauseButton().style.display = "block";
-    this.getOnScreenBufferElement().style.display = "none";
+    this.setPlayerOnBuffering(false);
   }
   setPlayerOnPause() {
     this.getMainPlayButton().style.display = "block";
@@ -21,5 +21,12 @@ export default class PlayerActions extends PlayerReferences {
   }
   hideQualityBox() {
     this.getQualitySelectionBox().style.visibility = "hidden";
+  }
+  setPlayerOnBuffering(val) {
+    if (val) {
+      this.getOnScreenBufferElement().style.display = "block";
+    } else {
+      this.getOnScreenBufferElement().style.display = "none";
+    }
   }
 }
