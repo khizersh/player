@@ -1,4 +1,8 @@
-import { CURRENT_VIDEO_URL, PLAYER_TIME_UPDATE } from "./controls/PlayerConst";
+import {
+  CURRENT_VIDEO_URL,
+  PLAYER_TIME_UPDATE,
+  IS_VIDEO_LIVE
+} from "./controls/PlayerConst";
 import PlayerActions from "./controls/PlayerActions";
 
 export default class HttpLiveStreaming extends PlayerActions {
@@ -15,6 +19,7 @@ export default class HttpLiveStreaming extends PlayerActions {
       this.hls = new Hls({ maxMaxBufferLength: 30, startFragPrefetch: true });
       this.hls.loadSource(videoSrc);
       this.hls.attachMedia(this.playerRef);
+      this.onVideoLevelLoaded();
       this.onVideoDataLoaded();
       this.onBufferEvent();
     } else if (this.playerRef.canPlayType("application/vnd.apple.mpegurl")) {
@@ -23,18 +28,20 @@ export default class HttpLiveStreaming extends PlayerActions {
   }
   onVideoDataLoaded() {
     this.hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
-      console.log("Ali");
-
       this.addQualitiesInPlayer(data.levels);
       this.realTimeVideoQualityChecker();
       this.onHLSStreamPlaying();
     });
   }
+  onVideoLevelLoaded() {
+    this.hls.on(Hls.Events.LEVEL_LOADED, (event, data) => {
+      IS_VIDEO_LIVE = data.details.live;
+      console.log("IS_VIDEO_LIVE ", IS_VIDEO_LIVE);
+    });
+  }
   onBufferEvent() {
     try {
       this.hls.on(Hls.Events.ERROR, (event, { details }) => {
-        console.log(details);
-
         if (details === Hls.ErrorDetails.BUFFER_STALLED_ERROR) {
           this.setPlayerOnBuffering(true);
         }

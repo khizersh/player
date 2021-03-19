@@ -5,3 +5,4 @@ export const PLAYER_PROGRESS = "progress";
 export var IS_PLAYING = false;
 export var IS_QUALITY_BOX_OPEN = false;
 export var CURRENT_VIDEO_URL = "";
+export var IS_VIDEO_LIVE = false;
