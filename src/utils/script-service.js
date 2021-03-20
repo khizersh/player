@@ -1,15 +1,11 @@
-import { Subject } from "../apis/Observer";
-import { ScriptLoadedObserver } from "../core/observers";
 import { cssForPlayer } from "./../css/index";
-var observer = new Subject();
-var scriptObserver = new ScriptLoadedObserver();
-observer.subscribeObserver(scriptObserver);
+import { observer, scriptObserver } from "../core/HTTPStreaming/HTTPObserver";
 
 export function addScriptsInHtml(scripts) {
   for (let i = 0; i < scripts.length; i++) {
     var scriptTag = document.createElement("script");
     scriptTag.type = "text/javascript";
-    scriptTag.addEventListener("load", function (event) {
+    scriptTag.addEventListener("load", function(event) {
       observer.notifyObserver(scriptObserver);
     });
     scriptTag.setAttribute("src", scripts[i]);

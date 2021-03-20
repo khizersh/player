@@ -70,7 +70,7 @@ export default class PlayerControls extends PlayerEvents {
     });
   }
   addVideoTimeUpdate() {
-    this.addListeners(this.video, PLAYER_TIME_UPDATE, () => {
+    this.addListeners(this.video, PLAYER_TIME_UPDATE, e => {
       let currentTime = this.video.currentTime;
       this.MovePlayerProgress(currentTime);
       this.getCurrentTimeElement().innerHTML = secondsToHms(currentTime);

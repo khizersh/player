@@ -14,3 +14,8 @@ export function secondsToHms(e) {
     return h + ":" + m + ":" + s;
   }
 }
+export function checkFileFormat(url) {
+  var ext = url.split(".");
+  ext = ext[ext.length - 1];
+  return ext;
+}

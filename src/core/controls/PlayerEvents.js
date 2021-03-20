@@ -1,5 +1,8 @@
 import { Subject } from "../../apis/Observer";
-import PlayerObserver, { QualityBoxObserver } from "../observers";
+import PlayerObserver, {
+  QualityBoxObserver,
+  OBSERVING_STATE
+} from "../observers";
 import { IS_PLAYING, IS_QUALITY_BOX_OPEN } from "./PlayerConst";
 import PlayerReferences from "./PlayerReferences";
 
@@ -16,11 +19,13 @@ export default class PlayerEvents extends PlayerReferences {
   PlayVideo() {
     IS_PLAYING = true;
     this.video.play();
+    OBSERVING_STATE = "play";
     this.observer.notifyObserver(this.playerObserver);
   }
   PauseVideo() {
     IS_PLAYING = false;
     this.video.pause();
+    OBSERVING_STATE = "play";
     this.observer.notifyObserver(this.playerObserver);
   }
   ForwardVideo() {
@@ -41,12 +46,14 @@ export default class PlayerEvents extends PlayerReferences {
     }
   }
   SeekVideoTo(elem) {
+    OBSERVING_STATE = "buffer";
     var playerBounds = this.getProgressBarContainer().getBoundingClientRect();
     var calcPercent = (elem.layerX / playerBounds.width) * 100;
     var vidSec = (this.video.duration / 100) * calcPercent;
     this.MovePlayerProgress(vidSec);
     this.video.currentTime = vidSec;
     this.vidQualityLevels = [];
+    this.observer.notifyObserver(this.playerObserver);
   }
 
   MoveBufferedRangeInVideo(element) {

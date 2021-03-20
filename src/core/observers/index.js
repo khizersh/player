@@ -1,12 +1,13 @@
 import {
   CURRENT_VIDEO_URL,
   IS_PLAYING,
-  IS_QUALITY_BOX_OPEN,
+  IS_QUALITY_BOX_OPEN
 } from "../controls/PlayerConst";
 import PlayerActions from "../controls/PlayerActions";
-import HttpLiveStreaming from "../HttpLiveStreaming";
+import { allScriptLoaderObsevers } from "../HTTPStreaming/HttpLiveStreaming";
 
 var PlayerAction = new PlayerActions();
+export var OBSERVING_STATE = "";
 
 export default function PlayerObserver() {
   function managePlayerPlayingState() {
@@ -16,10 +17,17 @@ export default function PlayerObserver() {
       PlayerAction.setPlayerOnPause();
     }
   }
+  function handleOnScreenBuffer() {
+    PlayerAction.setPlayerOnBuffering(true);
+  }
   return {
-    notify: function (index) {
-      managePlayerPlayingState();
-    },
+    notify: function(index) {
+      if (OBSERVING_STATE == "play") {
+        managePlayerPlayingState();
+      } else if (OBSERVING_STATE == "buffer") {
+        handleOnScreenBuffer();
+      }
+    }
   };
 }
 
@@ -32,19 +40,8 @@ export function QualityBoxObserver() {
     }
   }
   return {
-    notify: function (index) {
+    notify: function(index) {
       manageQualityBoxState();
-    },
-  };
-}
-
-export function ScriptLoadedObserver() {
-  return {
-    notify: function (index) {
-      if (window.Hls) {
-        var hlsObj = new HttpLiveStreaming();
-        hlsObj.loadHlsVideo();
-      }
-    },
+    }
   };
 }

@@ -2,8 +2,8 @@ import {
   CURRENT_VIDEO_URL,
   PLAYER_TIME_UPDATE,
   IS_VIDEO_LIVE
-} from "./controls/PlayerConst";
-import PlayerActions from "./controls/PlayerActions";
+} from "../controls/PlayerConst";
+import PlayerActions from "../controls/PlayerActions";
 
 export default class HttpLiveStreaming extends PlayerActions {
   constructor() {
@@ -24,14 +24,22 @@ export default class HttpLiveStreaming extends PlayerActions {
       this.onBufferEvent();
     } else if (this.playerRef.canPlayType("application/vnd.apple.mpegurl")) {
       this.playerRef.src = videoSrc;
+    } else {
+      this.playerRef.src = videoSrc;
+      this.addSourceToVideo(this.playerRef, videoSrc, "video/mp4");
     }
   }
+
   onVideoDataLoaded() {
-    this.hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
-      this.addQualitiesInPlayer(data.levels);
-      this.realTimeVideoQualityChecker();
-      this.onHLSStreamPlaying();
-    });
+    try {
+      this.hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
+        this.addQualitiesInPlayer(data.levels);
+        this.realTimeVideoQualityChecker();
+        this.onHLSStreamPlaying();
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
   onVideoLevelLoaded() {
     this.hls.on(Hls.Events.LEVEL_LOADED, (event, data) => {
@@ -41,8 +49,10 @@ export default class HttpLiveStreaming extends PlayerActions {
   }
   onBufferEvent() {
     try {
-      this.hls.on(Hls.Events.ERROR, (event, { details }) => {
-        if (details === Hls.ErrorDetails.BUFFER_STALLED_ERROR) {
+      this.hls.on(Hls.Events.ERROR, (event, data) => {
+        console.log(event);
+        console.log(data);
+        if (data.details === Hls.ErrorDetails.BUFFER_STALLED_ERROR) {
           this.setPlayerOnBuffering(true);
         }
       });

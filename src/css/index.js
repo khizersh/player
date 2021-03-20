@@ -155,7 +155,7 @@ video::-webkit-media-controls {
   background: rgb(77, 72, 72);
   visibility: hidden;
   overflow-y: scroll;
-  height: 200px;
+  max-height: 200px;
 }
 .Tplayer_quality_switcher {
   position: absolute;
