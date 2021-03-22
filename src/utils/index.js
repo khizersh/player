@@ -19,3 +19,9 @@ export function checkFileFormat(url) {
   ext = ext[ext.length - 1];
   return ext;
 }
+export function addSourceToVideo(element, src, type) {
+  var source = document.createElement("source");
+  source.src = src;
+  source.type = type;
+  element.appendChild(source);
+}

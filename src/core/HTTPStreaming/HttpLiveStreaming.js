@@ -4,6 +4,7 @@ import {
   IS_VIDEO_LIVE
 } from "../controls/PlayerConst";
 import PlayerActions from "../controls/PlayerActions";
+import { addSourceToVideo } from "../../utils";
 
 export default class HttpLiveStreaming extends PlayerActions {
   constructor() {
@@ -26,7 +27,7 @@ export default class HttpLiveStreaming extends PlayerActions {
       this.playerRef.src = videoSrc;
     } else {
       this.playerRef.src = videoSrc;
-      this.addSourceToVideo(this.playerRef, videoSrc, "video/mp4");
+      addSourceToVideo(this.playerRef, videoSrc, "video/mp4");
     }
   }
 
@@ -50,8 +51,6 @@ export default class HttpLiveStreaming extends PlayerActions {
   onBufferEvent() {
     try {
       this.hls.on(Hls.Events.ERROR, (event, data) => {
-        console.log(event);
-        console.log(data);
         if (data.details === Hls.ErrorDetails.BUFFER_STALLED_ERROR) {
           this.setPlayerOnBuffering(true);
         }

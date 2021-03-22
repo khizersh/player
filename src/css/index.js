@@ -172,4 +172,104 @@ video::-webkit-media-controls {
 .Tplayer_quality_ul {
   padding-inline-start: 0px;
 }
+.svg-styles{
+  width: 15px;
+}
+`;
+
+export const loaderCss = `.tap-loader {
+  height: 32px;
+  width: 32px;
+}
+.tap-loader span {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  height: 32px;
+  width: 32px;
+}
+.tap-loader span::before,
+.tap-loader span::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  height: 50px;
+  width: 50px;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  opacity: 0;
+  -webkit-animation: tap-loader-1 1.5s cubic-bezier(0.075, 0.82, 0.165, 1)
+    infinite;
+  animation: tap-loader-1 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
+}
+@-webkit-keyframes tap-loader-1 {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0) scale(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1.5);
+    opacity: 0;
+  }
+}
+@keyframes tap-loader-1 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.5);
+    opacity: 0;
+  }
+}
+.tap-loader span::after {
+  -webkit-animation: tap-loader-2 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) 0.25s
+    infinite;
+  animation: tap-loader-2 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) 0.25s
+    infinite;
+}
+@-webkit-keyframes tap-loader-2 {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0) scale(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0;
+  }
+}
+@keyframes tap-loader-2 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0;
+  }
+}
+
+.Tplayer_quality_box::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: transparent;
+}
+
+.Tplayer_quality_box::-webkit-scrollbar {
+  width: 5px;
+  background-color: transparent;
+}
+
+.Tplayer_quality_box::-webkit-scrollbar-thumb {
+  background-color: rgb(0 0 0 / 40%);
+  border: 1px solid #555;
+}
 `;

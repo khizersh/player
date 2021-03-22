@@ -1,3 +1,5 @@
+import { playSVG, pauseSVG, replay, rewind, forward } from "./Images";
+
 export const MainPlayer = `<div class="Twrapper">
 <video id="Tplayer">
 </video>
@@ -29,23 +31,23 @@ export const MainPlayer = `<div class="Twrapper">
             <div class="Tplayer_buttons_container">
                 <div class="Tplayer_btn_space">
                     <button class="Tplayer_btn Tplayer_10_sec_rewind">
-                        <img src="images/rewind.svg" class="Tplayer_seekable_btn" />
+                        ${rewind.default}
                     </button>
                 </div>
                 <div class="Tplayer_btn_space" style="margin: auto">
                     <button class="Tplayer_btn Tplayer_play">
-                        <img src="images/play.svg" width="15px" />
+                        ${playSVG.default}
                     </button>
                     <button class="Tplayer_btn Tplayer_pause">
-                        <img src="images/pause.svg" width="15px" />
+                    ${pauseSVG.default}
                     </button>
                     <button class="Tplayer_btn Tplayer_replay">
-                        <img src="images/replay.svg" width="15px" />
+                    ${replay.default}
                     </button>
                 </div>
                 <div class="Tplayer_btn_space">
                     <button class="Tplayer_btn Tplayer_10_sec_forward">
-                        <img src="images/forward.svg" class="Tplayer_seekable_btn" />
+                        ${forward.default}
                     </button>
                 </div>
 
@@ -65,7 +67,6 @@ export const MainPlayer = `<div class="Twrapper">
         </div>
         <div class="Tplayer_resolution">
             <div class="Tplayer_btn_space">
-
                 <button class="Tplayer_btn " id="Tplayer_volume">
                     <img src="images/volume.svg" class="Tplayer_volume_btn" />
                 </button>
