@@ -9,7 +9,7 @@ export const MainPlayer = `<div class="Twrapper">
 </div>
 <div class="Tplayer_main_wrapper">
     <div class="Tplayer_main_btns">
-        <div class="Tplayer_main_play">
+        <div class="Tplayer_main_play" style="display: none">
             <img src="images/play-main.png" width="100px"
                 alt="play-image" />
         </div>
@@ -29,14 +29,9 @@ export const MainPlayer = `<div class="Twrapper">
     <div class="Tplayer_controls">
         <div class="Tplayer_buttons">
             <div class="Tplayer_buttons_container">
-                <div class="Tplayer_btn_space">
-                    <button class="Tplayer_btn Tplayer_10_sec_rewind">
-                        ${rewind.default}
-                    </button>
-                </div>
                 <div class="Tplayer_btn_space" style="margin: auto">
                     <button class="Tplayer_btn Tplayer_play">
-                        ${playSVG.default}
+                    ${playSVG.default}
                     </button>
                     <button class="Tplayer_btn Tplayer_pause">
                     ${pauseSVG.default}
@@ -45,22 +40,16 @@ export const MainPlayer = `<div class="Twrapper">
                     ${replay.default}
                     </button>
                 </div>
-                <div class="Tplayer_btn_space">
-                    <button class="Tplayer_btn Tplayer_10_sec_forward">
-                        ${forward.default}
-                    </button>
-                </div>
-
             </div>
         </div>
         <div class="Tplayer_bar">
-            <div class="Tplayer_timer">
-                <div class="Tplayer_current_time">0:00</div>
-            </div>
             <div class="Tplayer_bar_container">
                 <div class="Tplayer_progress"></div>
                 <div class="Tplayer_buffered"></div>
             </div>
+            <div class="Tplayer_timer">
+            <div class="Tplayer_current_time">0:00</div>
+        </div> / 
             <div class="Tplayer_timer">
                 <div class="Tplayer_total_time">0:00</div>
             </div>

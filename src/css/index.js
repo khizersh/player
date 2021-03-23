@@ -1,6 +1,8 @@
 export const cssForPlayer = `
 .Twrapper {
-  width: 70%;
+  width: 100%;
+  height: 100%;
+  background: black;
   position: relative;
   display: flex;
 }
@@ -8,6 +10,7 @@ export const cssForPlayer = `
   width: 100%;
   height: 100%;
   transition: all 0.5s;
+  border-radius: 5px;
 }
 .Tplayer_configs {
   padding: 0 10px 0 10px;
@@ -19,15 +22,14 @@ body {
   font-family: monospace;
 }
 .Tplayer_controls {
-  background: rgb(0 0 0 / 80%);
   position: absolute;
   bottom: 0px;
   display: flex;
   padding: 5px;
   width: 100%;
   flex-wrap: nowrap;
-  height: 30px;
-  /* visibility: hidden; */
+  height: 50px;
+  background: linear-gradient(0deg, rgb(3 2 2 / 32%) 21%, rgb(0 0 0 / 23%) 56%, rgb(255 255 255 / 0%) 100%)
 }
 .Twrapper:hover .Tplayer_controls {
   visibility: visible;
@@ -46,30 +48,33 @@ body {
 }
 .Tplayer_bar {
   margin-bottom: 5px;
-  width: 70%;
+  width: 100%;
   cursor: pointer;
   position: relative;
   display: flex;
   align-items: center;
   margin: auto;
+  transition: all 0.3s;
+  height: 2px;
+  border-radius: 10px
+}
+.Tplayer_bar:hover {
+  height: 6px;
+  transition: all 0.3s;
 }
 .Tplayer_buttons {
-  width: 15%;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
   margin: auto;
 }
 .Tplayer_progress {
-  height: 7px;
-  background: #377c00;
+  height: 100%;
+  background: #fff;
   width: 0%;
   transition: all 0.1s;
   position: absolute;
   border-radius: 10px;
 }
 .Tplayer_buffered {
-  height: 7px;
+  height: 100%;
   background: #6f6f6f;
   width: 0%;
   transition: all 0.1s;
@@ -79,10 +84,7 @@ body {
 video::-webkit-media-controls {
   display: none !important;
 }
-.Tplayer_buttons_container {
-  display: flex;
-  margin: auto;
-}
+
 .Tplayer_btn_space {
   padding: 0 10px 0px 10px;
 }
@@ -103,7 +105,7 @@ video::-webkit-media-controls {
   position: relative;
   display: flex;
   align-items: center;
-  margin: auto;
+  height: 100%;
   background: #414141;
 }
 .Tplayer_total_time {
@@ -141,13 +143,12 @@ video::-webkit-media-controls {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 .Tplayer_main_play {
-  transform: translate(-50%, -50%);
   cursor: pointer;
 }
 .Tplayer_main_buffer {
-  transform: translate(-50%, -50%);
   cursor: pointer;
 }
 .Tplayer_quality_box {
@@ -174,6 +175,10 @@ video::-webkit-media-controls {
 }
 .svg-styles{
   width: 15px;
+}
+:-webkit-full-screen video {
+  width: 100%;
+  height: 100%;
 }
 `;
 

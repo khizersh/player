@@ -2,7 +2,9 @@ import {
   CLICK,
   IS_PLAYING,
   PLAYER_PROGRESS,
-  PLAYER_TIME_UPDATE
+  PLAYER_TIME_UPDATE,
+  DBL_CLICK,
+  KEYDOWN
 } from "./PlayerConst";
 import PlayerEvents from "./PlayerEvents";
 import { secondsToHms } from "./../../utils/index";
@@ -13,7 +15,6 @@ export default class PlayerControls extends PlayerEvents {
     this.addPauseEvent();
     this.addOnScreenBtnPlayEvent();
     this.addOnScreenPlayPauseEvent();
-    this.addVideoRewindEvent();
     this.addVideoForwardEvent();
     this.addBufferedSlider();
     this.addVideoTimeUpdate();
@@ -21,6 +22,7 @@ export default class PlayerControls extends PlayerEvents {
     this.addLoadedMetaData();
     this.addFullScreenEvent();
     this.addSettingsOption();
+    this.goFullScreenOnDblClick();
   }
   addOnScreenBtnPlayEvent() {
     let onScreenPlayBtn = this.getOnScreenPlayButton();
@@ -51,16 +53,20 @@ export default class PlayerControls extends PlayerEvents {
       }
     });
   }
-  addVideoRewindEvent() {
-    let rewindBtn = this.getVideoRewindButton();
-    this.addListeners(rewindBtn, CLICK, () => {
-      this.RewindVideo();
-    });
-  }
+
   addVideoForwardEvent() {
-    let forward = this.getVideoForwardButton();
-    this.addListeners(forward, CLICK, () => {
-      this.ForwardVideo();
+    this.addListeners(document, KEYDOWN, e => {
+      if (e.keyCode == "37") {
+        this.RewindVideo();
+      } else if (e.keyCode == "39") {
+        this.ForwardVideo();
+      } else if (e.keyCode == "32") {
+        if (IS_PLAYING) {
+          this.PauseVideo();
+        } else {
+          this.PlayVideo();
+        }
+      }
     });
   }
   addBufferedSlider() {
@@ -74,7 +80,7 @@ export default class PlayerControls extends PlayerEvents {
       let currentTime = this.video.currentTime;
       this.MovePlayerProgress(currentTime);
       this.getCurrentTimeElement().innerHTML = secondsToHms(currentTime);
-      this.getOnScreenBufferElement().style.display = "none";
+      this.getOnScreenBufferElement().style.visibility = "hidden";
     });
   }
   addVideoSeek() {
@@ -87,12 +93,22 @@ export default class PlayerControls extends PlayerEvents {
     let totalTime = this.getTotalTimeElement();
     this.video.onloadedmetadata = () => {
       totalTime.innerHTML = secondsToHms(this.video.duration);
-      this.getOnScreenBufferElement().style.display = "none";
+      this.getOnScreenBufferElement().style.visibility = "hidden";
+      this.getOnScreenPlayButton().style.display = "block";
     };
   }
   addFullScreenEvent() {
     let fullScr = this.getFullScreenButton();
     this.addListeners(fullScr, CLICK, () => {
+      this.SwitchToFullScreen();
+    });
+  }
+  goFullScreenOnDblClick() {
+    let wrapper = this.getFullPlayerSelection();
+    this.addListeners(wrapper, DBL_CLICK, e => {
+      console.log("Woah");
+
+      e.stopPropagation();
       this.SwitchToFullScreen();
     });
   }

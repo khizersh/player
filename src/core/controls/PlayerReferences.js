@@ -6,6 +6,9 @@ export default class PlayerReferences {
   getMainPlayButton() {
     return this.validateElementReference("Tplayer_play");
   }
+  getPlayerContainer() {
+    return this.validateElementReference("Twrapper");
+  }
   getMainPauseButton() {
     return this.validateElementReference("Tplayer_pause");
   }
@@ -29,12 +32,6 @@ export default class PlayerReferences {
   }
   getProgressBarContainer() {
     return this.validateElementReference("Tplayer_bar_container");
-  }
-  getVideoForwardButton() {
-    return this.validateElementReference("Tplayer_10_sec_forward");
-  }
-  getVideoRewindButton() {
-    return this.validateElementReference("Tplayer_10_sec_rewind");
   }
   getTotalTimeElement() {
     return this.validateElementReference("Tplayer_total_time");

@@ -17,7 +17,7 @@ export default class HttpLiveStreaming extends PlayerActions {
     this.playerRef = this.getVideoRef();
     var videoSrc = CURRENT_VIDEO_URL;
     if (Hls.isSupported()) {
-      this.hls = new Hls({ maxMaxBufferLength: 30, startFragPrefetch: true });
+      this.hls = new Hls({ maxMaxBufferLength: 120, startFragPrefetch: true });
       this.hls.loadSource(videoSrc);
       this.hls.attachMedia(this.playerRef);
       this.onVideoLevelLoaded();
@@ -51,6 +51,9 @@ export default class HttpLiveStreaming extends PlayerActions {
   onBufferEvent() {
     try {
       this.hls.on(Hls.Events.ERROR, (event, data) => {
+        console.log(event);
+        console.log(data);
+
         if (data.details === Hls.ErrorDetails.BUFFER_STALLED_ERROR) {
           this.setPlayerOnBuffering(true);
         }

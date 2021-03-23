@@ -24,9 +24,9 @@ export default class PlayerActions extends PlayerReferences {
   }
   setPlayerOnBuffering(val) {
     if (val) {
-      this.getOnScreenBufferElement().style.display = "block";
+      this.getOnScreenBufferElement().style.visibility = "visible";
     } else {
-      this.getOnScreenBufferElement().style.display = "none";
+      this.getOnScreenBufferElement().style.visibility = "hidden";
     }
   }
 }

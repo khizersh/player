@@ -1,4 +1,6 @@
 export const CLICK = "click";
+export const KEYDOWN = "keydown";
+export const DBL_CLICK = "dblclick";
 export const PLAYER_TIME_UPDATE = "timeupdate";
 export const PLAYER_PLAYING = "playing";
 export const PLAYER_PROGRESS = "progress";

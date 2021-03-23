@@ -29,33 +29,40 @@ export default class PlayerEvents extends PlayerReferences {
     this.observer.notifyObserver(this.playerObserver);
   }
   ForwardVideo() {
+    this.MovePlayerProgress(this.video.currentTime + 10);
     this.video.currentTime += 10;
+    this.ChangeObservingState();
   }
   RewindVideo() {
+    this.MovePlayerProgress(this.video.currentTime - 10);
     this.video.currentTime -= 10;
+    this.ChangeObservingState();
   }
   SwitchToFullScreen() {
-    if (this.video.requestFullscreen) {
-      this.video.requestFullscreen();
-    } else if (this.video.webkitRequestFullscreen) {
+    let video = this.getPlayerContainer();
+    if (video.requestFullscreen) {
+      video.requestFullscreen();
+    } else if (video.webkitRequestFullscreen) {
       /* Safari */
-      this.video.webkitRequestFullscreen();
-    } else if (this.video.msRequestFullscreen) {
+      video.webkitRequestFullscreen();
+    } else if (video.msRequestFullscreen) {
       /* IE11 */
-      this.video.msRequestFullscreen();
+      video.msRequestFullscreen();
     }
   }
   SeekVideoTo(elem) {
-    OBSERVING_STATE = "buffer";
     var playerBounds = this.getProgressBarContainer().getBoundingClientRect();
     var calcPercent = (elem.layerX / playerBounds.width) * 100;
     var vidSec = (this.video.duration / 100) * calcPercent;
     this.MovePlayerProgress(vidSec);
     this.video.currentTime = vidSec;
     this.vidQualityLevels = [];
+    this.ChangeObservingState();
+  }
+  ChangeObservingState() {
+    OBSERVING_STATE = "buffer";
     this.observer.notifyObserver(this.playerObserver);
   }
-
   MoveBufferedRangeInVideo(element) {
     var video = this.video;
     var duration = video.duration;
@@ -75,6 +82,8 @@ export default class PlayerEvents extends PlayerReferences {
     }
   }
   MovePlayerProgress(moveTo) {
+    console.log(moveTo);
+
     let video = this.getVideoRef();
     let progressBar = this.getProgressBar();
     var progress = moveTo / video.duration;
