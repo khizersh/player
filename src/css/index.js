@@ -55,10 +55,12 @@ body {
   align-items: center;
   margin: auto;
   transition: all 0.3s;
-  height: 2px;
-  border-radius: 10px
+  height: 100%;
+  border-radius: 10px;
+  box-sizing: border-box;
 }
-.Tplayer_bar:hover {
+.Tplayer_bar:hover .Tplayer_bar_container {
+  box-sizing: border-box;
   height: 6px;
   transition: all 0.3s;
 }
@@ -105,7 +107,7 @@ video::-webkit-media-controls {
   position: relative;
   display: flex;
   align-items: center;
-  height: 100%;
+  height: 2px;
   background: #414141;
 }
 .Tplayer_total_time {
