@@ -25,3 +25,23 @@ export function addSourceToVideo(element, src, type) {
   source.type = type;
   element.appendChild(source);
 }
+export var Events = {};
+
+export function trigger(event) {
+  // Slice arguments into array
+  var tail = Array.prototype.slice.call(arguments, 1);
+
+  // If event exist, call callback with callback data
+  for (var i in Events[event]) {
+    Events[event][i].apply(this, tail);
+  }
+  // dont call global event if error
+  if (event === "error") {
+    return this;
+  }
+  // call global event handler if exist
+  for (var i in Events["event"]) {
+    Events["event"][i].apply(this, [event]);
+  }
+  return this;
+}

@@ -4,13 +4,14 @@ import {
   IS_VIDEO_LIVE
 } from "../controls/PlayerConst";
 import PlayerActions from "../controls/PlayerActions";
-import { addSourceToVideo } from "../../utils";
+import { addSourceToVideo, trigger } from "../../utils";
 
 export default class HttpLiveStreaming extends PlayerActions {
   constructor() {
     super();
     this.hls = {};
     this.vidQualityLevels = [];
+    this.currentQuality = 0;
   }
 
   loadHlsVideo() {
@@ -46,6 +47,7 @@ export default class HttpLiveStreaming extends PlayerActions {
     this.hls.on(Hls.Events.LEVEL_LOADED, (event, data) => {
       IS_VIDEO_LIVE = data.details.live;
       console.log("IS_VIDEO_LIVE ", IS_VIDEO_LIVE);
+      trigger("isLive", { live: IS_VIDEO_LIVE });
     });
   }
   onBufferEvent() {
@@ -56,6 +58,7 @@ export default class HttpLiveStreaming extends PlayerActions {
 
         if (data.details === Hls.ErrorDetails.BUFFER_STALLED_ERROR) {
           this.setPlayerOnBuffering(true);
+          trigger("buffering");
         }
       });
     } catch (e) {
@@ -76,13 +79,18 @@ export default class HttpLiveStreaming extends PlayerActions {
       uls.append(li);
       this.vidQualityLevels.unshift(qualities[i - 1].height);
     }
+    trigger("qualitiesAvailable", qualities);
   }
   realTimeVideoQualityChecker() {
-    this.getCurrentVideoQuality().innerHTML = `(${
-      this.vidQualityLevels[
+    if (this.currentQuality == this.vidQualityLevels[this.hls.currentLevel]) {
+      return;
+    } else {
+      this.currentQuality = this.vidQualityLevels[
         this.hls.currentLevel == -1 ? this.hls.loadLevel : this.hls.currentLevel
-      ]
-    })`;
+      ];
+      this.getCurrentVideoQuality().innerHTML = `(${this.currentQuality})`;
+      trigger("currentQuality", this.currentQuality);
+    }
   }
   onHLSStreamPlaying() {
     this.getVideoRef().addEventListener(PLAYER_TIME_UPDATE, () => {

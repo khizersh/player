@@ -5,6 +5,7 @@ import PlayerObserver, {
 } from "../observers";
 import { IS_PLAYING, IS_QUALITY_BOX_OPEN } from "./PlayerConst";
 import PlayerReferences from "./PlayerReferences";
+import { trigger } from "../../utils";
 
 export default class PlayerEvents extends PlayerReferences {
   constructor() {
@@ -21,22 +22,32 @@ export default class PlayerEvents extends PlayerReferences {
     this.video.play();
     OBSERVING_STATE = "play";
     this.observer.notifyObserver(this.playerObserver);
+    trigger("play");
   }
   PauseVideo() {
     IS_PLAYING = false;
     this.video.pause();
     OBSERVING_STATE = "play";
     this.observer.notifyObserver(this.playerObserver);
+    trigger("pause");
   }
   ForwardVideo() {
     this.MovePlayerProgress(this.video.currentTime + 10);
     this.video.currentTime += 10;
     this.ChangeObservingState();
+    trigger("forward", {
+      prevTime: this.video.currentTime - 10,
+      currentTime: this.video.currentTime
+    });
   }
   RewindVideo() {
     this.MovePlayerProgress(this.video.currentTime - 10);
     this.video.currentTime -= 10;
     this.ChangeObservingState();
+    trigger("rewind", {
+      prevTime: this.video.currentTime + 10,
+      currentTime: this.video.currentTime
+    });
   }
   SwitchToFullScreen() {
     let video = this.getPlayerContainer();
@@ -49,15 +60,18 @@ export default class PlayerEvents extends PlayerReferences {
       /* IE11 */
       video.msRequestFullscreen();
     }
+    trigger("fullscreen");
   }
   SeekVideoTo(elem) {
     var playerBounds = this.getProgressBarContainer().getBoundingClientRect();
     var calcPercent = (elem.layerX / playerBounds.width) * 100;
     var vidSec = (this.video.duration / 100) * calcPercent;
+    var currentTime = this.video.currentTime;
     this.MovePlayerProgress(vidSec);
     this.video.currentTime = vidSec;
     this.vidQualityLevels = [];
     this.ChangeObservingState();
+    trigger("seek", { seekedFrom: currentTime, seekedTo: vidSec });
   }
   ChangeObservingState() {
     OBSERVING_STATE = "buffer";
@@ -82,8 +96,6 @@ export default class PlayerEvents extends PlayerReferences {
     }
   }
   MovePlayerProgress(moveTo) {
-    console.log(moveTo);
-
     let video = this.getVideoRef();
     let progressBar = this.getProgressBar();
     var progress = moveTo / video.duration;

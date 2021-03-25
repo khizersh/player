@@ -7,7 +7,7 @@ import {
   KEYDOWN
 } from "./PlayerConst";
 import PlayerEvents from "./PlayerEvents";
-import { secondsToHms } from "./../../utils/index";
+import { secondsToHms, trigger } from "./../../utils/index";
 export default class PlayerControls extends PlayerEvents {
   constructor() {
     super();
@@ -81,6 +81,10 @@ export default class PlayerControls extends PlayerEvents {
       this.MovePlayerProgress(currentTime);
       this.getCurrentTimeElement().innerHTML = secondsToHms(currentTime);
       this.getOnScreenBufferElement().style.visibility = "hidden";
+      trigger("playing", {
+        currentTime: this.video.currentTime,
+        totalTime: this.video.duration
+      });
     });
   }
   addVideoSeek() {
@@ -103,11 +107,10 @@ export default class PlayerControls extends PlayerEvents {
       this.SwitchToFullScreen();
     });
   }
+
   goFullScreenOnDblClick() {
     let wrapper = this.getFullPlayerSelection();
     this.addListeners(wrapper, DBL_CLICK, e => {
-      console.log("Woah");
-
       e.stopPropagation();
       this.SwitchToFullScreen();
     });
