@@ -45,5 +45,6 @@ function playVideoAccordingToFormat() {
     addSourceToVideo(player, CURRENT_VIDEO_URL, "video/mp4");
   } else if (format == "m3u8" || format == "m3u8?") {
     initHLSVideo();
+  } else {
   }
 }

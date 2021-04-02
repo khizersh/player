@@ -5,6 +5,7 @@ import {
 } from "../controls/PlayerConst";
 import PlayerActions from "../controls/PlayerActions";
 import { addSourceToVideo, trigger } from "../../utils";
+import ErrorHandlers from "../Errors/ErrorHandlers";
 
 export default class HttpLiveStreaming extends PlayerActions {
   constructor() {
@@ -12,6 +13,7 @@ export default class HttpLiveStreaming extends PlayerActions {
     this.hls = {};
     this.vidQualityLevels = [];
     this.currentQuality = 0;
+    this.error = new ErrorHandlers();
   }
 
   loadHlsVideo() {
@@ -24,6 +26,7 @@ export default class HttpLiveStreaming extends PlayerActions {
       this.onVideoLevelLoaded();
       this.onVideoDataLoaded();
       this.onBufferEvent();
+      this.catchNetworkErrors();
     } else if (this.playerRef.canPlayType("application/vnd.apple.mpegurl")) {
       this.playerRef.src = videoSrc;
     } else {
@@ -59,6 +62,19 @@ export default class HttpLiveStreaming extends PlayerActions {
         if (data.details === Hls.ErrorDetails.BUFFER_STALLED_ERROR) {
           this.setPlayerOnBuffering(true);
           trigger("buffering");
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  catchNetworkErrors() {
+    try {
+      this.hls.on(Hls.Events.ERROR, (event, data) => {
+        console.log(event);
+        console.log(data);
+        if (data.fatal) {
+          this.diplayErrorOnPlayer(this.error.catchNetworkErrors(data.details));
         }
       });
     } catch (e) {

@@ -182,6 +182,67 @@ video::-webkit-media-controls {
   width: 100%;
   height: 100%;
 }
+#Tplayer_volume:hover ~ .Tplayer_volume_bar {
+  visibility: visible;
+}
+.Tplayer_volume_changer{
+  position : absolute;
+  bottom: calc(40px + 70px);
+  right: 5%;
+}
+.Tplayer_volume_bar{
+  transform: rotate(270deg);
+  background: black;
+  padding: 5px;
+  border-radius: 10px;
+  visibility: hidden;
+}
+#slider {
+  -webkit-appearance: none;
+  width: calc(100%);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.314);
+  outline: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+#slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+#slider::-webkit-slider-thumb:hover {
+  background: #d4d4d4;
+  transform: scale(1.2);
+}
+#slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  transition: background 0.15s ease-in-out;
+}
+#slider::-moz-range-thumb:hover {
+  background: #d4d4d4;
+}
+.err-container{
+  width: 70%;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  background: black;
+  box-shadow: 0px 0px 10px 1px black;
+  text-align: center;
+  visibility: hidden;
+}
+
 `;
 
 export const loaderCss = `.tap-loader {
@@ -279,4 +340,5 @@ export const loaderCss = `.tap-loader {
   background-color: rgb(0 0 0 / 40%);
   border: 1px solid #555;
 }
+
 `;

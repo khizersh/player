@@ -18,6 +18,9 @@ export default class PlayerReferences {
   getVideoRef() {
     return this.validateElementReference("Tplayer");
   }
+  getPlayerFullWrapper() {
+    return this.validateElementReference("Tplayer_main_wrapper");
+  }
   getFullScreenButton() {
     return this.validateElementReference("Tplayer_fullScr");
   }
@@ -56,6 +59,12 @@ export default class PlayerReferences {
   }
   getCurrentVideoQuality() {
     return this.validateElementReference("Tplayer_current_auto_quality");
+  }
+  getErrorContainerText() {
+    return this.validateElementReference("err-text");
+  }
+  getErrorContainer() {
+    return this.validateElementReference("err-container");
   }
   validateElementReference(element) {
     var elementRef = getElementReference(element);

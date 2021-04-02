@@ -9,6 +9,9 @@ export const MainPlayer = `<div class="Twrapper">
 </div>
 <div class="Tplayer_main_wrapper">
     <div class="Tplayer_main_btns">
+        <div class="err-container">
+            <p class="err-text">This video can not be played</p>
+        </div>
         <div class="Tplayer_main_play" style="display: none">
             <img src="images/play-main.png" width="100px"
                 alt="play-image" />
@@ -24,6 +27,12 @@ export const MainPlayer = `<div class="Twrapper">
                 <li class="Tplayer_quality_list_styles" onclick="switchQualityToAuto(this)">Auto <span
                         id="Tplayer_current_auto_quality"></span></li>
             </ul>
+        </div>
+    </div>
+    <div class="Tplayer_volume_changer">
+        <div class="Tplayer_volume_bar">
+        <input id="slider" type="range" min="4" max="32" value="16" />
+
         </div>
     </div>
     <div class="Tplayer_controls">

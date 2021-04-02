@@ -29,4 +29,10 @@ export default class PlayerActions extends PlayerReferences {
       this.getOnScreenBufferElement().style.visibility = "hidden";
     }
   }
+  diplayErrorOnPlayer(error) {
+    this.getPlayerFullWrapper().style.background = "white";
+    this.setPlayerOnPlaying();
+    this.getErrorContainerText().innerHTML = error;
+    this.getErrorContainer().style.visibility = "visible";
+  }
 }
