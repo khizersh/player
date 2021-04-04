@@ -35,4 +35,7 @@ export default class PlayerActions extends PlayerReferences {
     this.getErrorContainerText().innerHTML = error;
     this.getErrorContainer().style.visibility = "visible";
   }
+  setPlayerToLiveMode() {
+    this.getTotalTimeElement().style.display = "none";
+  }
 }

@@ -242,7 +242,16 @@ video::-webkit-media-controls {
   text-align: center;
   visibility: hidden;
 }
-
+.Tplayer_live{
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+  padding: 3px 6px 3px 6px;
+  margin: 0px;
+  font-weight: bold;
+}
+}
 `;
 
 export const loaderCss = `.tap-loader {

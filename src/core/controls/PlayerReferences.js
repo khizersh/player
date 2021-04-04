@@ -66,6 +66,12 @@ export default class PlayerReferences {
   getErrorContainer() {
     return this.validateElementReference("err-container");
   }
+  getLiveContainer() {
+    return this.validateElementReference("Tplayer_live");
+  }
+  getLiveLogo() {
+    return this.validateElementReference("Tplayer_live_logo");
+  }
   validateElementReference(element) {
     var elementRef = getElementReference(element);
     if (elementRef) {

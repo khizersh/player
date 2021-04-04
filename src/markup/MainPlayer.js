@@ -35,6 +35,9 @@ export const MainPlayer = `<div class="Twrapper">
 
         </div>
     </div>
+    <div class="Tplayer_live">
+        <div class="Tplayer_live_logo">LIVE</div>
+    </div>
     <div class="Tplayer_controls">
         <div class="Tplayer_buttons">
             <div class="Tplayer_buttons_container">
