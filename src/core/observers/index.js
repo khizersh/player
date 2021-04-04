@@ -1,7 +1,8 @@
 import {
   CURRENT_VIDEO_URL,
   IS_PLAYING,
-  IS_QUALITY_BOX_OPEN
+  IS_QUALITY_BOX_OPEN,
+  IS_VIDEO_LIVE
 } from "../controls/PlayerConst";
 import PlayerActions from "../controls/PlayerActions";
 import { allScriptLoaderObsevers } from "../HTTPStreaming/HttpLiveStreaming";
@@ -42,6 +43,21 @@ export function QualityBoxObserver() {
   return {
     notify: function(index) {
       manageQualityBoxState();
+    }
+  };
+}
+
+export function LiveStreamObserver() {
+  function checkIfVideoIsLive() {
+    if (IS_VIDEO_LIVE) {
+      PlayerAction.setPlayerToLiveMode();
+    } else {
+      PlayerAction.setPlayerToVODMode();
+    }
+  }
+  return {
+    notify: function() {
+      checkIfVideoIsLive();
     }
   };
 }

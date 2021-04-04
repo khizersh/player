@@ -37,5 +37,10 @@ export default class PlayerActions extends PlayerReferences {
   }
   setPlayerToLiveMode() {
     this.getTotalTimeElement().style.display = "none";
+    this.getLiveContainer().style.visibility = "visible";
+  }
+  setPlayerToVODMode() {
+    this.getTotalTimeElement().style.display = "block";
+    this.getLiveContainer().style.visibility = "hidden";
   }
 }

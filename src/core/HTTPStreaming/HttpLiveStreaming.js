@@ -6,6 +6,8 @@ import {
 import PlayerActions from "../controls/PlayerActions";
 import { addSourceToVideo, trigger } from "../../utils";
 import ErrorHandlers from "../Errors/ErrorHandlers";
+import { Subject } from "../../apis/Observer";
+import { LiveStreamObserver } from "../observers";
 
 export default class HttpLiveStreaming extends PlayerActions {
   constructor() {
@@ -14,6 +16,9 @@ export default class HttpLiveStreaming extends PlayerActions {
     this.vidQualityLevels = [];
     this.currentQuality = 0;
     this.error = new ErrorHandlers();
+    this.observer = new Subject();
+    this.HLSOberser = new LiveStreamObserver();
+    this.observer.subscribeObserver(this.HLSOberser);
   }
 
   loadHlsVideo() {
@@ -49,6 +54,7 @@ export default class HttpLiveStreaming extends PlayerActions {
   onVideoLevelLoaded() {
     this.hls.on(Hls.Events.LEVEL_LOADED, (event, data) => {
       IS_VIDEO_LIVE = data.details.live;
+      this.observer.notifyObserver(this.HLSOberser);
       console.log("IS_VIDEO_LIVE ", IS_VIDEO_LIVE);
       trigger("isLive", { live: IS_VIDEO_LIVE });
     });
