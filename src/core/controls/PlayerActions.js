@@ -43,4 +43,7 @@ export default class PlayerActions extends PlayerReferences {
     this.getTotalTimeElement().style.display = "block";
     this.getLiveContainer().style.visibility = "hidden";
   }
+  hideQualitySettingButton() {
+    this.getQualitySelectButton().style.display = "none";
+  }
 }

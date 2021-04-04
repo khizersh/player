@@ -43,9 +43,13 @@ export default class HttpLiveStreaming extends PlayerActions {
   onVideoDataLoaded() {
     try {
       this.hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
-        this.addQualitiesInPlayer(data.levels);
-        this.realTimeVideoQualityChecker();
-        this.onHLSStreamPlaying();
+        if (data.levels && data.levels.length > 1) {
+          this.addQualitiesInPlayer(data.levels);
+          this.realTimeVideoQualityChecker();
+          this.onHLSStreamPlaying();
+        } else {
+          this.hideQualitySettingButton();
+        }
       });
     } catch (err) {
       console.log(err);
@@ -55,7 +59,7 @@ export default class HttpLiveStreaming extends PlayerActions {
     this.hls.on(Hls.Events.LEVEL_LOADED, (event, data) => {
       IS_VIDEO_LIVE = data.details.live;
       this.observer.notifyObserver(this.HLSOberser);
-      console.log("IS_VIDEO_LIVE ", IS_VIDEO_LIVE);
+      console.log("IS_VIDEO_LIVE ", this.hls.drift);
       trigger("isLive", { live: IS_VIDEO_LIVE });
     });
   }

@@ -121,6 +121,12 @@ export default class PlayerControls extends PlayerEvents {
       this.OpenCloseSettingBox();
     });
   }
+  addMoveToLive() {
+    let live = this.getLiveLogo();
+    this.addListeners(live, CLICK, () => {
+      this.MoveToLive();
+    });
+  }
   addListeners(element, name, cb) {
     element.addEventListener(name, cb);
   }

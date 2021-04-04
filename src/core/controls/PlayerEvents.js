@@ -110,4 +110,5 @@ export default class PlayerEvents extends PlayerReferences {
       this.observer.notifyObserver(this.qualityBoxObserver);
     }
   }
+  MoveToLive() {}
 }
