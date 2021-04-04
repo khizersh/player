@@ -250,6 +250,7 @@ video::-webkit-media-controls {
   padding: 3px 6px 3px 6px;
   margin: 0px;
   font-weight: bold;
+  visibility: none;
 }
 }
 `;

@@ -15,7 +15,6 @@ function addPlayerToDOM(elementId) {
   player.innerHTML = MainPlayer;
   return player;
 }
-let hlsJs = new HttpLiveStreaming();
 export function _initializePlayer(id) {
   addScriptsInHtml(VendorScripts);
   addCSSInDom();
@@ -28,6 +27,7 @@ function initHLSVideo() {
     new (function() {
       return {
         notify: function() {
+          let hlsJs = new HttpLiveStreaming();
           hlsJs.loadHlsVideo();
         }
       };
