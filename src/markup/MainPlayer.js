@@ -1,4 +1,12 @@
-import { playSVG, pauseSVG, replay, rewind, forward, playMain } from "./Images";
+import {
+  playSVG,
+  pauseSVG,
+  replay,
+  rewind,
+  forward,
+  playMain,
+  expand
+} from "./Images";
 
 export const MainPlayer = `<div class="Twrapper">
 <video id="Tplayer">
@@ -78,7 +86,7 @@ export const MainPlayer = `<div class="Twrapper">
             </div>
             <div class="Tplayer_btn_space">
                 <button class="Tplayer_btn " id="Tplayer_fullScr">
-                    <img src="images/expand.svg" class="Tplayer_expand_btn" />
+                   ${expand.default}
                 </button>
             </div>
         </div>
