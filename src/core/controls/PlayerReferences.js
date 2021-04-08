@@ -72,6 +72,12 @@ export default class PlayerReferences {
   getLiveLogo() {
     return this.validateElementReference("Tplayer_live_logo");
   }
+  getVolumeBar() {
+    return this.validateElementReference("Tplayer_volume_bar");
+  }
+  getVolumeButton() {
+    return this.validateElementReference("Tplayer_volume");
+  }
   validateElementReference(element) {
     var elementRef = getElementReference(element);
     if (elementRef) {

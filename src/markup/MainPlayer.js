@@ -39,7 +39,6 @@ export const MainPlayer = `<div class="Twrapper">
     <div class="Tplayer_volume_changer">
         <div class="Tplayer_volume_bar">
         <input id="slider" type="range" min="4" max="32" value="16" />
-
         </div>
     </div>
     <div class="Tplayer_live">

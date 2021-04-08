@@ -2,7 +2,8 @@ import {
   CURRENT_VIDEO_URL,
   IS_PLAYING,
   IS_QUALITY_BOX_OPEN,
-  IS_VIDEO_LIVE
+  IS_VIDEO_LIVE,
+  IS_VOLUME_BAR_OPEN
 } from "../controls/PlayerConst";
 import PlayerActions from "../controls/PlayerActions";
 import { allScriptLoaderObsevers } from "../HTTPStreaming/HttpLiveStreaming";
@@ -43,6 +44,21 @@ export function QualityBoxObserver() {
   return {
     notify: function(index) {
       manageQualityBoxState();
+    }
+  };
+}
+
+export function VolumeChangerObserver() {
+  function manageVolumeBar() {
+    if (IS_VOLUME_BAR_OPEN) {
+      PlayerAction.showVolumeBar();
+    } else {
+      PlayerAction.hideVolumeBar();
+    }
+  }
+  return {
+    notify: function(index) {
+      manageVolumeBar();
     }
   };
 }

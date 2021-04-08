@@ -1,9 +1,14 @@
 import { Subject } from "../../apis/Observer";
 import PlayerObserver, {
   QualityBoxObserver,
-  OBSERVING_STATE
+  OBSERVING_STATE,
+  VolumeChangerObserver
 } from "../observers";
-import { IS_PLAYING, IS_QUALITY_BOX_OPEN } from "./PlayerConst";
+import {
+  IS_PLAYING,
+  IS_QUALITY_BOX_OPEN,
+  IS_VOLUME_BAR_OPEN
+} from "./PlayerConst";
 import PlayerReferences from "./PlayerReferences";
 import { trigger } from "../../utils";
 
@@ -14,8 +19,10 @@ export default class PlayerEvents extends PlayerReferences {
     this.observer = new Subject();
     this.playerObserver = new PlayerObserver();
     this.qualityBoxObserver = new QualityBoxObserver();
+    this.volumeBarObserver = new VolumeChangerObserver();
     this.observer.subscribeObserver(this.playerObserver);
     this.observer.subscribeObserver(this.qualityBoxObserver);
+    this.observer.subscribeObserver(this.volumeBarObserver);
   }
   PlayVideo() {
     IS_PLAYING = true;
@@ -111,4 +118,14 @@ export default class PlayerEvents extends PlayerReferences {
     }
   }
   MoveToLive() {}
+
+  OpenCloseVolumeBar() {
+    if (IS_VOLUME_BAR_OPEN) {
+      IS_VOLUME_BAR_OPEN = false;
+      this.observer.notifyObserver(this.volumeBarObserver);
+    } else {
+      IS_VOLUME_BAR_OPEN = true;
+      this.observer.notifyObserver(this.volumeBarObserver);
+    }
+  }
 }
