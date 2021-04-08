@@ -1,4 +1,4 @@
-import { playSVG, pauseSVG, replay, rewind, forward } from "./Images";
+import { playSVG, pauseSVG, replay, rewind, forward, playMain } from "./Images";
 
 export const MainPlayer = `<div class="Twrapper">
 <video id="Tplayer">
@@ -13,8 +13,7 @@ export const MainPlayer = `<div class="Twrapper">
             <p class="err-text">This video can not be played</p>
         </div>
         <div class="Tplayer_main_play" style="display: none">
-            <img src="images/play-main.png" width="100px"
-                alt="play-image" />
+           ${playMain.default}
         </div>
         <div class="Tplayer_main_buffer">
             <div class="tap-loader center"><span></span></div>
