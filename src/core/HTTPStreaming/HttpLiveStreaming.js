@@ -59,7 +59,6 @@ export default class HttpLiveStreaming extends PlayerActions {
     this.hls.on(Hls.Events.LEVEL_LOADED, (event, data) => {
       IS_VIDEO_LIVE = data.details.live;
       this.observer.notifyObserver(this.HLSOberser);
-      console.log("IS_VIDEO_LIVE ", this.hls.drift);
       trigger("isLive", { live: IS_VIDEO_LIVE });
     });
   }

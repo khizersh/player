@@ -117,7 +117,23 @@ export default class PlayerEvents extends PlayerReferences {
       this.observer.notifyObserver(this.qualityBoxObserver);
     }
   }
-  MoveToLive() {}
+  MoveToLive(video) {
+    let videoDuration = video.duration;
+    let currentTime = video.currentTime;
+    console.log(
+      Math.ceil(videoDuration / 5) * 5,
+      Math.ceil((currentTime + 30) / 5) * 5
+    );
+
+    if (
+      Math.ceil(videoDuration / 5) * 5 ==
+      Math.ceil((currentTime + 30) / 5) * 5
+    ) {
+      return;
+    } else {
+      video.currentTime = video.duration - 30;
+    }
+  }
 
   OpenCloseVolumeBar() {
     if (IS_VOLUME_BAR_OPEN) {

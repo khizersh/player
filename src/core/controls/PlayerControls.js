@@ -24,6 +24,7 @@ export default class PlayerControls extends PlayerEvents {
     this.addSettingsOption();
     this.goFullScreenOnDblClick();
     this.addVolumeBtnClick();
+    this.addLiveButtonClick();
   }
   addOnScreenBtnPlayEvent() {
     let onScreenPlayBtn = this.getOnScreenPlayButton();
@@ -134,6 +135,12 @@ export default class PlayerControls extends PlayerEvents {
 
     this.addListeners(volumeBtn, CLICK, () => {
       this.OpenCloseVolumeBar();
+    });
+  }
+  addLiveButtonClick() {
+    let liveBtn = this.getLiveContainer();
+    this.addListeners(liveBtn, CLICK, () => {
+      this.MoveToLive(this.video);
     });
   }
   addListeners(element, name, cb) {
