@@ -134,12 +134,16 @@ video::-webkit-media-controls {
   cursor: pointer;
 }
 .Tplayer_volume_btn:hover + .Tplayer_volume_changer .Tplayer_volume_bar{
-  display: block;
-  transition: 1s all;
+  position: relative;
+  visibility: visible;
+  opacity: 1;
+  left: 0%;
 }
 .Tplayer_volume_changer:hover .Tplayer_volume_bar{
-  display: block;
-  transition: 1s all;
+  position: relative;
+  visibility: visible;
+  opacity: 1;
+  left: 0%;
 }
 .Tplayer_main_wrapper {
   position: absolute;
@@ -198,7 +202,11 @@ video::-webkit-media-controls {
   
 }
 .Tplayer_volume_bar{
-  display: none;
+  position: absolute;
+  visibility: visible;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear;
+  left: 105%;
 }
 .err-container{
   width: 70%;

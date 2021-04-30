@@ -78,6 +78,9 @@ export default class PlayerReferences {
   getVolumeButton() {
     return this.validateElementReference("Tplayer_volume");
   }
+  getVolumeSlider() {
+    return this.validateElementReference("slider");
+  }
   validateElementReference(element) {
     var elementRef = getElementReference(element);
     if (elementRef) {

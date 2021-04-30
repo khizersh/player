@@ -139,4 +139,7 @@ export default class PlayerEvents extends PlayerReferences {
       this.observer.notifyObserver(this.volumeBarObserver);
     }
   }
+  ChangeVideoVolume(e) {
+    this.video.volume = e.target.value / 100;
+  }
 }

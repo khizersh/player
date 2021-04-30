@@ -74,7 +74,7 @@ export const MainPlayer = `<div class="Twrapper">
                   <img src="images/volume.svg" class="Tplayer_volume_btn" id="Tplayer_volume" />
                   <div class="Tplayer_volume_changer">
                      <div class="Tplayer_volume_bar">
-                        <input id="slider" orient='270deg' type='range' min='0' value='50' max='100' step='1' />
+                        <input id="slider" orient='270deg' type='range' min='0' value='100' max='100' step='1' />
                      </div>
                   </div>
                </button>
