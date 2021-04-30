@@ -34,11 +34,6 @@ export const MainPlayer = `<div class="Twrapper">
          </ul>
       </div>
    </div>
-   <div class="Tplayer_volume_changer">
-      <div class="Tplayer_volume_bar">
-         <input id="slider" orient='270deg' type='range' min='0' value='50' max='100' step='1' />
-      </div>
-   </div>
    <div class="Tplayer_live">
       <div class="Tplayer_live_logo">LIVE</div>
    </div>
@@ -75,8 +70,13 @@ export const MainPlayer = `<div class="Twrapper">
          </div>
          <div class="Tplayer_resolution">
             <div class="Tplayer_btn_space">
-               <button class="Tplayer_btn " id="Tplayer_volume">
-               <img src="images/volume.svg" class="Tplayer_volume_btn" />
+               <button class="Tplayer_btn">
+                  <img src="images/volume.svg" class="Tplayer_volume_btn" id="Tplayer_volume" />
+                  <div class="Tplayer_volume_changer">
+                     <div class="Tplayer_volume_bar">
+                        <input id="slider" orient='270deg' type='range' min='0' value='50' max='100' step='1' />
+                     </div>
+                  </div>
                </button>
             </div>
             <div class="Tplayer_btn_space" id="Tplayer_settings">

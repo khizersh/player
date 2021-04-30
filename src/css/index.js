@@ -187,15 +187,10 @@ video::-webkit-media-controls {
   visibility: visible;
 }
 .Tplayer_volume_changer{
-  position : absolute;
-  bottom: calc(40px + 70px);
-  right: 5%;
+  
 }
 .Tplayer_volume_bar{
-  background: black;
-  padding: 5px;
-  border-radius: 10px;
-  visibility: hidden;
+  display: none;
 }
 .err-container{
   width: 70%;

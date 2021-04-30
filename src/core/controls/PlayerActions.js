@@ -47,9 +47,9 @@ export default class PlayerActions extends PlayerReferences {
     this.getQualitySelectButton().style.display = "none";
   }
   showVolumeBar() {
-    this.getVolumeBar().style.visibility = "visible";
+    this.getVolumeBar().style.display = "block";
   }
   hideVolumeBar() {
-    this.getVolumeBar().style.visibility = "hidden";
+    this.getVolumeBar().style.display = "none";
   }
 }
