@@ -222,11 +222,12 @@ video::-webkit-media-controls {
   position: absolute;
   top: 0;
   right: 0;
-  background: red;
+  background: white;
   padding: 3px 6px 3px 6px;
   margin: 0px;
   font-weight: bold;
   visibility: hidden;
+  color: black;
 }
 .Tplayer_control_section {
   width: 100%;
