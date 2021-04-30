@@ -4,7 +4,9 @@ import {
   PLAYER_PROGRESS,
   PLAYER_TIME_UPDATE,
   DBL_CLICK,
-  KEYDOWN
+  KEYDOWN,
+  ON_MOUSE_OVER,
+  IS_QUALITY_BOX_OPEN
 } from "./PlayerConst";
 import PlayerEvents from "./PlayerEvents";
 import { secondsToHms, trigger } from "./../../utils/index";
@@ -23,8 +25,9 @@ export default class PlayerControls extends PlayerEvents {
     this.addFullScreenEvent();
     this.addSettingsOption();
     this.goFullScreenOnDblClick();
-    this.addVolumeBtnClick();
+    this.addVolumeBtnHover();
     this.addLiveButtonClick();
+    this.closeAllMenus();
   }
   addOnScreenBtnPlayEvent() {
     let onScreenPlayBtn = this.getOnScreenPlayButton();
@@ -119,7 +122,8 @@ export default class PlayerControls extends PlayerEvents {
   }
   addSettingsOption() {
     let settings = this.getQualitySelectButton();
-    this.addListeners(settings, CLICK, () => {
+    this.addListeners(settings, CLICK, e => {
+      e.stopPropagation();
       this.OpenCloseSettingBox();
     });
   }
@@ -129,18 +133,26 @@ export default class PlayerControls extends PlayerEvents {
       this.MoveToLive();
     });
   }
-  addVolumeBtnClick() {
-    let volumeBtn = this.getVolumeButton();
-    console.log("volumeBtn ", volumeBtn);
-
-    this.addListeners(volumeBtn, CLICK, () => {
-      this.OpenCloseVolumeBar();
-    });
+  addVolumeBtnHover() {
+    // let volumeBtn = this.getVolumeButton();
+    // this.addListeners(volumeBtn, ON_MOUSE_OVER, () => {
+    //   this.OpenCloseVolumeBar();
+    // });
+    // this.addListeners(volumeBtn, "mouseout", () => {
+    //   this.OpenCloseVolumeBar();
+    // });
   }
+
   addLiveButtonClick() {
     let liveBtn = this.getLiveContainer();
     this.addListeners(liveBtn, CLICK, () => {
       this.MoveToLive(this.video);
+    });
+  }
+  closeAllMenus() {
+    this.addListeners(window, CLICK, () => {
+      IS_QUALITY_BOX_OPEN = true;
+      this.OpenCloseSettingBox();
     });
   }
   addListeners(element, name, cb) {

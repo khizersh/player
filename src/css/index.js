@@ -133,6 +133,14 @@ video::-webkit-media-controls {
   width: 20px;
   cursor: pointer;
 }
+.Tplayer_volume_btn:hover + .Tplayer_volume_changer .Tplayer_volume_bar{
+  display: block;
+  transition: 1s all;
+}
+.Tplayer_volume_changer:hover .Tplayer_volume_bar{
+  display: block;
+  transition: 1s all;
+}
 .Tplayer_main_wrapper {
   position: absolute;
   width: 100%;
