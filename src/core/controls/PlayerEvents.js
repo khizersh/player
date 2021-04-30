@@ -120,11 +120,6 @@ export default class PlayerEvents extends PlayerReferences {
   MoveToLive(video) {
     let videoDuration = video.duration;
     let currentTime = video.currentTime;
-    console.log(
-      Math.ceil(videoDuration / 5) * 5,
-      Math.ceil((currentTime + 30) / 5) * 5
-    );
-
     if (
       Math.ceil(videoDuration / 5) * 5 ==
       Math.ceil((currentTime + 30) / 5) * 5

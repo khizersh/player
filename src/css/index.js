@@ -25,11 +25,11 @@ body {
   position: absolute;
   bottom: 0px;
   display: flex;
-  padding: 5px;
+  padding: 5px 20px;
   width: 100%;
-  flex-wrap: nowrap;
-  height: 50px;
-  background: linear-gradient(0deg, rgb(3 2 2 / 32%) 21%, rgb(0 0 0 / 23%) 56%, rgb(255 255 255 / 0%) 100%)
+  flex-wrap: wrap;
+  background: linear-gradient(0deg, rgb(3 2 2 / 32%) 21%, rgb(0 0 0 / 23%) 56%, rgb(255 255 255 / 0%) 100%);
+  box-sizing: border-box;
 }
 .Twrapper:hover .Tplayer_controls {
   visibility: visible;
@@ -64,9 +64,9 @@ body {
   height: 6px;
   transition: all 0.3s;
 }
-.Tplayer_buttons {
-  margin: auto;
-}
+// .Tplayer_buttons {
+//   margin: auto;
+// }
 .Tplayer_progress {
   height: 100%;
   background: #fff;
@@ -94,12 +94,13 @@ video::-webkit-media-controls {
   width: 20px;
 }
 .Tplayer_resolution {
-  width: 15%;
+  width: 100%;
   cursor: pointer;
   position: relative;
   display: flex;
   align-items: center;
   margin: auto;
+  justify-content: flex-end;
 }
 .Tplayer_bar_container {
   width: 100%;
@@ -191,46 +192,10 @@ video::-webkit-media-controls {
   right: 5%;
 }
 .Tplayer_volume_bar{
-  transform: rotate(270deg);
   background: black;
   padding: 5px;
   border-radius: 10px;
   visibility: hidden;
-}
-#slider {
-  -webkit-appearance: none;
-  width: calc(100%);
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.314);
-  outline: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-}
-#slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: white;
-  cursor: pointer;
-  transition: all 0.15s ease-in-out;
-}
-#slider::-webkit-slider-thumb:hover {
-  background: #d4d4d4;
-  transform: scale(1.2);
-}
-#slider::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border: 0;
-  border-radius: 50%;
-  background: white;
-  cursor: pointer;
-  transition: background 0.15s ease-in-out;
-}
-#slider::-moz-range-thumb:hover {
-  background: #d4d4d4;
 }
 .err-container{
   width: 70%;
@@ -252,6 +217,14 @@ video::-webkit-media-controls {
   font-weight: bold;
   visibility: hidden;
 }
+.Tplayer_control_section {
+  width: 100%;
+  display: flex;
+  margin: 1% 0%;
+  align-items: center;
+}
+.Tplayer_timer {
+  display: flex;
 }
 `;
 
