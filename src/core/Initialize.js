@@ -38,6 +38,7 @@ function checkVideoType() {
   var vType = checkFileFormat(CURRENT_VIDEO_URL);
   return vType;
 }
+
 function playVideoAccordingToFormat() {
   let format = checkVideoType();
   if (format == "mp4" || format == "webm") {

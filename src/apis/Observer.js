@@ -1,4 +1,4 @@
-export var Subject = function() {
+export var   Subject = function() {
   var observers = [];
 
   return {

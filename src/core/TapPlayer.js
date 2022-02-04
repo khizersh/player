@@ -13,6 +13,7 @@ export default class TapPlayer {
     this.playVideo();
     this._events = {};
   }
+  
   _initPlayer() {
     CURRENT_VIDEO_URL = this.url;
     _initializePlayer(this.wrapper);
